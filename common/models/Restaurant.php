@@ -11,6 +11,7 @@ use Yii;
  * @property string $location
  * @property string $name
  * @property int $maxPeople
+ * @property int $currentPeople
  *
  * @property Menus[] $menuses
  * @property ProfileRestaurantFavorites[] $profileRestaurantFavorites
@@ -36,9 +37,11 @@ class Restaurant extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['location', 'name', 'maxPeople'], 'required'],
-            [['maxPeople'], 'integer'],
-            [['location', 'name'], 'string', 'max' => 45],
+            [['location', 'name', 'maxPeople', 'currentPeople'], 'required'],
+            [['maxPeople', 'currentPeople'], 'integer'],
+            [['location'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 45],
+            ['currentPeople', 'compare', 'compareAttribute' => 'maxPeople', 'operator' => '<', 'type' => 'number'],
         ];
     }
 
@@ -52,6 +55,7 @@ class Restaurant extends \yii\db\ActiveRecord
             'location' => 'Location',
             'name' => 'Name',
             'maxPeople' => 'Max People',
+            'currentPeople' => 'Current People',
         ];
     }
 
