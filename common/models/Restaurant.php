@@ -42,6 +42,7 @@ class Restaurant extends \yii\db\ActiveRecord
             [['location'], 'string', 'max' => 255],
             [['name'], 'string', 'max' => 45],
             ['currentPeople', 'compare', 'compareAttribute' => 'maxPeople', 'operator' => '<', 'type' => 'number'],
+            ['maxPeople', 'compare', 'compareAttribute' => 'currentPeople', 'operator' => '>', 'type' => 'number'],
         ];
     }
 
