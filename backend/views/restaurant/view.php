@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'location',
             'name',
             'maxPeople',
+            'currentPeople',
         ],
     ]) ?>
 
