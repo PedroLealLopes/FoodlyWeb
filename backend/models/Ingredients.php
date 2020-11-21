@@ -30,11 +30,9 @@ class Ingredients extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ingredientId', 'name', 'stock'], 'required'],
-            [['ingredientId'], 'integer'],
+            [['name', 'stock'], 'required'],
             [['stock'], 'number'],
             [['name'], 'string', 'max' => 45],
-            [['ingredientId'], 'unique'],
         ];
     }
 
