@@ -12,11 +12,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'dishId')->textInput() ?>
-
-    <?= $form->field($model, 'type')->textInput(['maxlength' => true]) ?>
-
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'type')->dropDownList([ 'STARTERS' => 'STARTERS', 'SALADS' => 'SALADS', 'MAIN COURSE' => 'MAIN COURSE', 'DESSERTS' => 'DESSERTS', 'DRINKS' => 'DRINKS', ], ['prompt' => '']) ?>
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 

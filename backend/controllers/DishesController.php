@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Dishes;
-use common\models\DishesSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,11 +35,11 @@ class DishesController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new DishesSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Dishes::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

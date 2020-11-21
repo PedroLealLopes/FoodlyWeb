@@ -8,8 +8,9 @@ use Yii;
  * This is the model class for table "dishes".
  *
  * @property int $dishId
- * @property string $type
  * @property string $name
+ * @property string|null $description
+ * @property string $type
  * @property float $price
  * @property int $menuId
  *
@@ -37,11 +38,11 @@ class Dishes extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['dishId', 'type', 'name', 'price', 'menuId'], 'required'],
-            [['dishId', 'menuId'], 'integer'],
+            [['name', 'type', 'price', 'menuId'], 'required'],
+            [['description', 'type'], 'string'],
             [['price'], 'number'],
-            [['type', 'name'], 'string', 'max' => 16],
-            [['dishId'], 'unique'],
+            [['menuId'], 'integer'],
+            [['name'], 'string', 'max' => 255],
             [['menuId'], 'exist', 'skipOnError' => true, 'targetClass' => Menus::className(), 'targetAttribute' => ['menuId' => 'menuId']],
         ];
     }
@@ -53,8 +54,9 @@ class Dishes extends \yii\db\ActiveRecord
     {
         return [
             'dishId' => 'Dish ID',
-            'type' => 'Type',
             'name' => 'Name',
+            'description' => 'Description',
+            'type' => 'Type',
             'price' => 'Price',
             'menuId' => 'Menu ID',
         ];
