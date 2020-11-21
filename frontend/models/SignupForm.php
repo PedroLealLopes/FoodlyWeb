@@ -1,4 +1,5 @@
 <?php
+
 namespace frontend\models;
 
 use Yii;
@@ -47,15 +48,24 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
+        // $user->generateEmailVerificationToken();
+        //Comentei para não termos que nos preocupar com email verifications
+        //O status fica a 10 que significa que já confirmou o mail.
+        $user->status = 10;
+        $user->save(false);
 
+
+        $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole('user');
+        $auth->assign($authorRole, $user->getId());
+
+        return $user->save();
     }
 
     /**

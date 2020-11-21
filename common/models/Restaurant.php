@@ -12,12 +12,15 @@ use Yii;
  * @property string $name
  * @property int $maxPeople
  * @property int $currentPeople
+<<<<<<< HEAD
  * @property string $openingHour
  * @property string $closingHour
  * @property int $allowsPets
  * @property int $hasVegan
  * @property string $description
  * @property string $wifiPassword
+=======
+>>>>>>> e148dc39d3524d1506beb6c3888f814d1fc72aad
  *
  * @property Menus[] $menuses
  * @property ProfileRestaurantFavorites[] $profileRestaurantFavorites
@@ -47,6 +50,8 @@ class Restaurant extends \yii\db\ActiveRecord
             [['openingHour', 'closingHour'], 'safe'],
             [['description'], 'string'],
             [['location', 'name', 'wifiPassword'], 'string', 'max' => 255],
+            ['currentPeople', 'compare', 'compareAttribute' => 'maxPeople', 'operator' => '<', 'type' => 'number'],
+            ['maxPeople', 'compare', 'compareAttribute' => 'currentPeople', 'operator' => '>', 'type' => 'number'],
         ];
     }
 
