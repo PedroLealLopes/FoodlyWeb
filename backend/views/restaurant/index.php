@@ -28,6 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'maxPeople',
             'currentPeople',
+            //'openingHour',
+            //'closingHour',
+            //'allowsPets',
+            //'hasVegan',
+            //'description:ntext',
+            //'wifiPassword',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
