@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Restaurant;
-use common\models\RestaurantSearch;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -35,11 +35,11 @@ class RestaurantController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new RestaurantSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Restaurant::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }

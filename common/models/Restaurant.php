@@ -11,6 +11,13 @@ use Yii;
  * @property string $location
  * @property string $name
  * @property int $maxPeople
+ * @property int $currentPeople
+ * @property string $openingHour
+ * @property string $closingHour
+ * @property int $allowsPets
+ * @property int $hasVegan
+ * @property string $description
+ * @property string $wifiPassword
  *
  * @property Menus[] $menuses
  * @property ProfileRestaurantFavorites[] $profileRestaurantFavorites
@@ -18,7 +25,6 @@ use Yii;
  * @property RestaurantReviews[] $restaurantReviews
  * @property Profiles[] $profilesUsers0
  * @property Staff[] $staff
- * @property Users[] $users
  */
 class Restaurant extends \yii\db\ActiveRecord
 {
@@ -36,9 +42,11 @@ class Restaurant extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['location', 'name', 'maxPeople'], 'required'],
-            [['maxPeople'], 'integer'],
-            [['location', 'name'], 'string', 'max' => 45],
+            [['location', 'name', 'maxPeople', 'currentPeople', 'openingHour', 'closingHour', 'allowsPets', 'hasVegan', 'description', 'wifiPassword'], 'required'],
+            [['maxPeople', 'currentPeople', 'allowsPets', 'hasVegan'], 'integer'],
+            [['openingHour', 'closingHour'], 'safe'],
+            [['description'], 'string'],
+            [['location', 'name', 'wifiPassword'], 'string', 'max' => 255],
         ];
     }
 
@@ -52,6 +60,13 @@ class Restaurant extends \yii\db\ActiveRecord
             'location' => 'Location',
             'name' => 'Name',
             'maxPeople' => 'Max People',
+            'currentPeople' => 'Current People',
+            'openingHour' => 'Opening Hour',
+            'closingHour' => 'Closing Hour',
+            'allowsPets' => 'Allows Pets',
+            'hasVegan' => 'Has Vegan',
+            'description' => 'Description',
+            'wifiPassword' => 'Wifi Password',
         ];
     }
 
@@ -113,15 +128,5 @@ class Restaurant extends \yii\db\ActiveRecord
     public function getStaff()
     {
         return $this->hasMany(Staff::className(), ['restaurantId' => 'restaurantId']);
-    }
-
-    /**
-     * Gets query for [[Users]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(Users::className(), ['userId' => 'userId'])->viaTable('staff', ['restaurantId' => 'restaurantId']);
     }
 }

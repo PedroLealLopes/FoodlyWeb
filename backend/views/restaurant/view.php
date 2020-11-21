@@ -33,6 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'location',
             'name',
             'maxPeople',
+            'currentPeople',
+            'openingHour',
+            'closingHour',
+            'allowsPets',
+            'hasVegan',
+            'description:ntext',
+            'wifiPassword',
         ],
     ]) ?>
 
