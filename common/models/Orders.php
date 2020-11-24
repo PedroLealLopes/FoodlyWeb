@@ -14,6 +14,8 @@ use Yii;
  * @property OrderItems[] $orderItems
  * @property Dishes[] $dishes
  * @property Profiles $user
+ *
+ *
  */
 class Orders extends \yii\db\ActiveRecord
 {
@@ -33,10 +35,16 @@ class Orders extends \yii\db\ActiveRecord
         return [
             [['orderId', 'date', 'userId'], 'required'],
             [['orderId', 'userId'], 'integer'],
-            [['date'], 'safe'],
+            [
+                ['date'],
+                'match',
+                'pattern' => '(^((0[1-9]|[12][0-9]|3[01])(/)(0[13578]|1[02]))|((0[1-9]|[12][0-9])(/)(02))|((0[1-9]|[12][0-9]|3[0])(/)(0[469]|11))(/)\d{4}$)',
+                'message' =>'Invalid date'
+            ],
             [['orderId'], 'unique'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => Profiles::className(), 'targetAttribute' => ['userId' => 'userId']],
         ];
+
     }
 
     /**
