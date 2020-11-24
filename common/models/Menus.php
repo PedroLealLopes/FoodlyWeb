@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $menuId
  * @property int $restaurantId
+ * @property string $date
  *
  * @property Dishes[] $dishes
  * @property Restaurant $restaurant
@@ -29,10 +30,12 @@ class Menus extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['menuId', 'restaurantId'], 'required'],
-            [['menuId', 'restaurantId'], 'integer'],
-            [['menuId'], 'unique'],
-            [['restaurantId'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurant::className(), 'targetAttribute' => ['restaurantId' => 'restaurantId']],
+            [['restaurantId', 'date'], 'required'],
+            [['restaurantId'], 'integer'],
+            [['date'], 'match',
+            'pattern' => '(^((0[1-9]|[12][0-9]|3[01])(/)(0[13578]|1[02]))|((0[1-9]|[12][0-9])(/)(02))|((0[1-9]|[12][0-9]|3[0])(/)(0[469]|11))(/)\d{4}$)',
+            'message' =>'Invalid date'],
+        [['restaurantId'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurant::className(), 'targetAttribute' => ['restaurantId' => 'restaurantId']],
         ];
     }
 
@@ -44,6 +47,7 @@ class Menus extends \yii\db\ActiveRecord
         return [
             'menuId' => 'Menu ID',
             'restaurantId' => 'Restaurant ID',
+            'date' => 'Date',
         ];
     }
 

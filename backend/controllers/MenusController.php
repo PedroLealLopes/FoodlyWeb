@@ -10,9 +10,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MenuController implements the CRUD actions for Menus model.
+ * MenusController implements the CRUD actions for Menus model.
  */
-class MenuController extends Controller
+class MenusController extends Controller
 {
     /**
      * {@inheritdoc}
