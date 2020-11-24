@@ -17,11 +17,5 @@ return [
             'rules' => [
             ],
         ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
     ],
 ];
