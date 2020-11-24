@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Orders */
@@ -14,7 +15,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'orderId')->textInput() ?>
 
-    <?= $form->field($model, 'date')->textInput() ?>
+    <?= $form->field($model, 'date')->widget(DatePicker::classname(), [
+        'dateFormat' => 'dd/MM/yyyy',
+    ]) ?>
 
     <?= $form->field($model, 'userId')->textInput() ?>
 
@@ -25,3 +28,8 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script>
+    var date = document.getElementById("orders-date");
+    date.classList.add("form-control");
+</script>
