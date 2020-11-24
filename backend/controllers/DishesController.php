@@ -66,8 +66,7 @@ class DishesController extends Controller
     public function actionCreate()
     {
         $model = new Dishes();
-        $latestMenu = Menus::find()->max('menuId');
-        $model->menuId = $latestMenu;
+        $model->menuId = Menus::find()->max('menuId');;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->dishId]);
