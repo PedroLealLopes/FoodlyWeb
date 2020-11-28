@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Dishes;
+use common\models\Menus;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -65,6 +66,7 @@ class DishesController extends Controller
     public function actionCreate()
     {
         $model = new Dishes();
+        $model->menuId = Menus::find()->max('menuId');;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->dishId]);

@@ -44,6 +44,7 @@ class Dishes extends \yii\db\ActiveRecord
             [['menuId'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['menuId'], 'exist', 'skipOnError' => true, 'targetClass' => Menus::className(), 'targetAttribute' => ['menuId' => 'menuId']],
+            ['price', 'compare', 'compareValue' => '0', 'operator' => '>', 'type' => 'number'],
         ];
     }
 
