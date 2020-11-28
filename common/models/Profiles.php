@@ -18,7 +18,7 @@ use Yii;
  * @property Orders[] $orders
  * @property ProfileRestaurantFavorites[] $profileRestaurantFavorites
  * @property Restaurant[] $restaurantRestaurants
- * @property Users $user
+ * @property User $user
  * @property RestaurantReviews[] $restaurantReviews
  * @property Restaurant[] $restaurantRestaurants0
  */
@@ -38,12 +38,11 @@ class Profiles extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userId', 'fullname', 'age'], 'required'],
-            [['userId', 'age'], 'integer'],
+            [['fullname', 'age'], 'required'],
+            [['age'], 'integer'],
             [['alergias', 'genero'], 'string'],
             [['fullname'], 'string', 'max' => 45],
-            [['userId'], 'unique'],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'userId']],
+            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
 
@@ -118,7 +117,7 @@ class Profiles extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['userId' => 'userId']);
+        return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 
     /**
