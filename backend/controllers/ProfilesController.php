@@ -4,15 +4,15 @@ namespace backend\controllers;
 
 use Yii;
 use common\models\Profiles;
-use yii\data\ActiveDataProvider;
+use common\models\ProfilesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProfileController implements the CRUD actions for Profiles model.
+ * ProfilesController implements the CRUD actions for Profiles model.
  */
-class ProfileController extends Controller
+class ProfilesController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -35,11 +35,11 @@ class ProfileController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Profiles::find(),
-        ]);
+        $searchModel = new ProfilesSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -54,24 +54,6 @@ class ProfileController extends Controller
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Profiles model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Profiles();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->userId]);
-        }
-
-        return $this->render('create', [
-            'model' => $model,
         ]);
     }
 
