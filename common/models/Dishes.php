@@ -40,6 +40,7 @@ class Dishes extends \yii\db\ActiveRecord
         return [
             [['name', 'type', 'price', 'menuId'], 'required'],
             [['description', 'type'], 'string'],
+            ['type', 'in', 'range' => ['STARTERS', 'SALADS', 'MAIN COURSE', 'DESSERTS', 'DRINKS']],
             [['price'], 'number'],
             [['menuId'], 'integer'],
             [['name'], 'string', 'max' => 255],
