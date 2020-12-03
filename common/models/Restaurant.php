@@ -43,7 +43,8 @@ class Restaurant extends \yii\db\ActiveRecord
     {
         return [
             [['location', 'name', 'maxPeople', 'currentPeople', 'openingHour', 'closingHour', 'allowsPets', 'hasVegan', 'description', 'wifiPassword'], 'required'],
-            [['maxPeople', 'currentPeople', 'allowsPets', 'hasVegan'], 'integer'],
+            [['maxPeople', 'currentPeople'], 'integer'],
+            [['allowsPets', 'hasVegan'], 'boolean'],
             [['openingHour', 'closingHour'], 'safe'],
             [['description'], 'string'],
             [['location', 'name', 'wifiPassword'], 'string', 'max' => 255],
