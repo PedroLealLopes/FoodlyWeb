@@ -12,11 +12,11 @@ use yii\jui\DatePicker;
 <div class="menus-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    
+
     <?= $form->field($model, 'restaurantId')->textInput() ?>
 
     <?= $form->field($model, 'date')->widget(DatePicker::classname(), [
-        'dateFormat' => 'dd/MM/yyyy',
+        'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
 
     <div class="form-group">
