@@ -16,11 +16,11 @@ class OrderTest extends \Codeception\Test\Unit
         $this->assertFalse($order->validate(['date']));
     }
 
-    public function testDateDate_InvalidDateWithRealMonths_False()
+    public function testDateDate_ValidDate_True()
     {
         $order = new Orders();
-        $order->date = "2020-02-31 23:59";
-        $this->assertTrue($order->validate(['date']), 'Motivo: O regex está a validar a data como se todos os meses tivessem 31 dias');
+        $order->date = "2020-12-30 23:59";
+        $this->assertTrue($order->validate(['date']));
     }
 
     public function testUserId_isUserIdString_False()
