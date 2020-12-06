@@ -1,6 +1,6 @@
-<?php namespace common\tests;
+<?php namespace backend\tests;
 
-use common\models\Ingredients;
+use app\models\Ingredients;
 
 class IngredientsTest extends \Codeception\Test\Unit
 {
