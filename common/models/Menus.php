@@ -31,7 +31,7 @@ class Menus extends \yii\db\ActiveRecord
     {
         return [
             [['restaurantId', 'date'], 'required'],
-            [['restaurantId'], 'integer'],
+            [['restaurantId', 'menuId'], 'integer'],
             [
                 ['date'], 'match',
                 'pattern' => '(^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$)',
