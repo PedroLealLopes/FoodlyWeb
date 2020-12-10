@@ -15,9 +15,7 @@ use yii\jui\DatePicker;
 
     <?= $form->field($model, 'orderId')->textInput() ?>
 
-    <?= $form->field($model, 'date')->widget(DatePicker::classname(), [
-        'dateFormat' => 'dd/MM/yyyy',
-    ]) ?>
+    <?= $form->field($model, 'date')->textInput()?>
 
     <?= $form->field($model, 'userId')->textInput() ?>
 
