@@ -41,12 +41,7 @@ class Profiles extends \yii\db\ActiveRecord
             [['fullname', 'age'], 'required'],
             [['age'], 'integer'],
             [['alergias'], 'string'],
-            [
-                ['genero'],
-                'match',
-                'pattern' => '(^[mf]$)',
-                'message' =>'Invalid date'
-            ],
+            ['alergias', 'in', 'range' => ['M', 'F']],
             [['fullname'], 'string', 'max' => 45],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
