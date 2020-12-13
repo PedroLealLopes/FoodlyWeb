@@ -8,14 +8,6 @@ class IngredientsTest extends \Codeception\Test\Unit
      * @var \common\tests\UnitTester
      */
     protected $tester;
-    
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
 
     // tests
     public function testStock_isFloat_true()
@@ -36,7 +28,7 @@ class IngredientsTest extends \Codeception\Test\Unit
     public function testName_isString_true()
     {
         $ingredient = new Ingredients();
-        $ingredient->name = "massa";
+        $ingredient->name = "foo";
         $this->assertTrue($ingredient->validate(['name']));
     }
 
