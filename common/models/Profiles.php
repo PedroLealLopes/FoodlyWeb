@@ -40,7 +40,8 @@ class Profiles extends \yii\db\ActiveRecord
         return [
             [['fullname', 'age'], 'required'],
             [['age'], 'integer'],
-            [['alergias', 'genero'], 'string'],
+            [['alergias'], 'string'],
+            ['alergias', 'in', 'range' => ['M', 'F']],
             [['fullname'], 'string', 'max' => 45],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
