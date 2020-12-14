@@ -9,7 +9,7 @@ class ProfileTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    // tests
+    
     public function testUserId_isIntAndExists_True()
     {
         $profile = new Profiles();
@@ -18,8 +18,7 @@ class ProfileTest extends \Codeception\Test\Unit
         $this->assertTrue($profile->validate(["userId"]));
 
     }
-
-    // tests
+    
     public function testUserId_isIntAndNotExists_False()
     {
         $profile = new Profiles();
@@ -27,16 +26,14 @@ class ProfileTest extends \Codeception\Test\Unit
         $profile->userId = -1;
         $this->assertFalse($profile->validate(["userId"]));
     }
-
-    // tests
+    
     public function testUserId_isString_False()
     {
         $profile = new Profiles();
         $profile->userId = "foo";
         $this->assertFalse($profile->validate(["userId"]));
     }
-
-     // tests
+     
      public function testFullName_isString_True()
      {
          $profile = new Profiles();
@@ -44,7 +41,6 @@ class ProfileTest extends \Codeception\Test\Unit
          $this->assertTrue($profile->validate(["fullname"]));
      } 
      
-     // tests
      public function testFullName_isNum_False()
      {
          $profile = new Profiles();
