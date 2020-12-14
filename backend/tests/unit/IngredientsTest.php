@@ -9,14 +9,14 @@ class IngredientsTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    // tests
+    
     public function testStock_isFloat_true()
     {
         $ingredient = new Ingredients();
         $ingredient->stock = 13.3;
         $this->assertTrue($ingredient->validate(['stock']));
     }
-    // tests
+    
     public function testStock_isString_false()
     {
         $ingredient = new Ingredients();
@@ -24,7 +24,7 @@ class IngredientsTest extends \Codeception\Test\Unit
         $this->assertTrue($ingredient->validate(['stock']));
     }
 
-    // tests
+    
     public function testName_isString_true()
     {
         $ingredient = new Ingredients();
@@ -32,7 +32,7 @@ class IngredientsTest extends \Codeception\Test\Unit
         $this->assertTrue($ingredient->validate(['name']));
     }
 
-    // tests
+    
     public function testName_isNum_false()
     {
         $ingredient = new Ingredients();
@@ -40,7 +40,7 @@ class IngredientsTest extends \Codeception\Test\Unit
         $this->assertFalse($ingredient->validate(['name']));
     }
 
-     // tests
+     
      public function testName_Has255Chars_false()
      {
          $ingredient = new Ingredients();
@@ -48,7 +48,7 @@ class IngredientsTest extends \Codeception\Test\Unit
          $this->assertFalse($ingredient->validate(['name']));
      }
 
-     // tests
+     
      public function testName_Limit45Chars_true()
      {
          $ingredient = new Ingredients();
