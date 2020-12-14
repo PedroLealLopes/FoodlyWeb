@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Ingredients;
 
 /**
- * IngredientsSearch represents the model behind the search form of `app\models\Ingredients`.
+ * IngredientsSearch represents the model behind the search form of `common\models\Ingredients`.
  */
 class IngredientsSearch extends Ingredients
 {
