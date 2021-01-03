@@ -36,14 +36,37 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'restaurants',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET location/{cidade}' => 'location',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                        '{cidade}' => '<cidade:\\w+>',
+                    ],
+                ], 
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'orders',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET client/{id}' => 'client',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
+                
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
