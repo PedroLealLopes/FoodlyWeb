@@ -19,10 +19,10 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="blank">
+<body class="bg-gradient-primary">
 <?php $this->beginBody() ?>
 
-    <div class="wrap">
+    <div class="container">
         <?= $content ?>
     </div>
 

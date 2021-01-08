@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
-
 /* @var $this yii\web\View */
 /* @var $model common\models\Menus */
 /* @var $form yii\widgets\ActiveForm */
@@ -19,6 +18,11 @@ use yii\jui\DatePicker;
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
 
+    <div class="form-group field-menus-date required">
+        <label for="start">Start date:</label>
+        <input type="date" class="form-control" id="start" name="trip-start">
+    </div>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
@@ -26,7 +30,7 @@ use yii\jui\DatePicker;
     <?php ActiveForm::end(); ?>
 
 </div>
-
+        
 <script>
     var date = document.getElementById("menus-date");
     date.classList.add("form-control");

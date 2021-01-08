@@ -42,7 +42,7 @@ class Orders extends \yii\db\ActiveRecord
                 'message' =>'Invalid date'
             ],
             [['orderId'], 'unique'],
-            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => Profiles::className(), 'targetAttribute' => ['userId' => 'userId']],
+            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
 
     }

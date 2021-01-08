@@ -11,8 +11,6 @@ body.blank {
 .wrap {
     min-height: 100%;
     height: auto;
-    margin: 0 auto -60px;
-    padding: 0 0 60px;
 }
 
 body.blank .wrap {
@@ -29,8 +27,36 @@ body.blank .wrap > div {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    /* padding: 70px 15px 20px; */
 }
+
+.glyphicon{
+    font-family: "Font Awesome 5 Free"!important; 
+    font-weight: 900;
+} 
+
+.glyphicon-eye-open::before{
+    content: "\f06e"!important;
+}
+
+.glyphicon-pencil::before{
+    content: "\f303"!important;
+}
+
+.glyphicon-trash::before{
+    content: "\f1f8"!important;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 .footer {
     height: 60px;

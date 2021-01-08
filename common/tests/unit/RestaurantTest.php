@@ -113,6 +113,8 @@ class RestaurantTest extends \Codeception\Test\Unit
         $restaurant->hasVegan = 1;
         $restaurant->description = $faker->text;
         $restaurant->wifiPassword = $faker->password();
+        
+        $this->assertFalse($restaurant->save());
     }
 
     //MAXPEOPLE TESTS
@@ -382,5 +384,7 @@ class RestaurantTest extends \Codeception\Test\Unit
         $restaurant->hasVegan = 1;
         $restaurant->description = $faker->text;
         // $restaurant->wifiPassword = $faker->password();
+        
+        $this->assertFalse($restaurant->save());
     }
 }
