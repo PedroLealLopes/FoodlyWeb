@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use Bluerhinos\phpMQTT;
 
 /**
  * This is the model class for table "orders".
@@ -87,5 +88,47 @@ class Orders extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(Profiles::className(), ['userId' => 'userId']);
+    }
+
+    public function afterSave($insert, $changedAttributes){
+        parent::afterSave($insert, $changedAttributes);
+
+        $id = $this->orderId;
+        $data = $this->date;
+        $userId = $this->userId;
+
+        $myObj = new \stdClass();
+        $myObj->id = $id;
+        $myObj->data = $this->date;
+        $myObj->userId = $this->userId;
+        $myJSON = json_encode($myObj);
+        if($insert){
+            $this->FazPublish("INSERT", $myJSON);
+        }
+        else{
+            $this->FazPublish("UPDATE", $myJSON);
+        }
+    }
+
+    public function afterDelete(){
+        parent::afterDelete();
+        $prod_id= $this->orderId;
+        $myObj=new \stdClass();
+        $myObj->id=$prod_id;
+        $myJSON = json_encode($myObj);
+        $this->FazPublish("DELETE",$myJSON);
+    }
+
+    public function FazPublish($canal, $msg){
+        $server = "127.0.0.1";
+        $port = 1883;
+        $username = "";
+        $password = "";
+        $client_id = "phpMQTT-publisher";
+        $mqtt = new phpMQTT($server,$port,$client_id);
+        if($mqtt->connect(true, NULL, $username, $password)){
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        }
     }
 }
