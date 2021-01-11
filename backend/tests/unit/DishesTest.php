@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests;
+namespace backend\tests;
 
 use common\models\Dishes;
 use common\models\Menus;
@@ -9,7 +9,7 @@ use Faker\Factory;
 class DishesTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \common\tests\UnitTester
+     * @var \backend\tests\UnitTester
      */
     protected $tester;
 
@@ -158,7 +158,7 @@ class DishesTest extends \Codeception\Test\Unit
         $this->assertFalse($dish->save());
     }
 
-    //price TESTS
+    //menu TESTS
     public function testMenuIdRequired_CanSaveWithoutMenuId_False()
     {
         $faker = Factory::create();
@@ -171,5 +171,40 @@ class DishesTest extends \Codeception\Test\Unit
         // $dish->menuId = 1;
 
         $this->assertFalse($dish->save());
+    }
+
+    //criar, editar e eliminar na DB
+    function testSavingDish()
+    {
+        $dish = new Dishes();
+        $dish->type = 'STARTERS';
+        $dish->price = 5;
+        $dish->menuId = 1;
+        $dish->name = 'prato principal';
+        $dish->description = 'descriaoooo';
+        $dish->save();
+        $this->tester->seeInDatabase('dishes', ['name' => 'prato principal']);
+    }
+
+    function testEditDish()
+    {
+        $id = $this->tester->grabRecord('common\models\Dishes', ['name' => 'prato principal']);
+
+        $dish = Dishes::findOne($id);
+        $dish->name = ('sobremesa');
+        $dish->save();
+
+        $this->tester->seeRecord('common\models\Dishes', ['name' => 'sobremesa']);
+        $this->tester->dontSeeRecord('common\models\Dishes', ['name' => 'prato principal']);
+    }
+
+    function testDeleteDish()
+    {
+        $id = $this->tester->grabRecord('common\models\Dishes', ['name' => 'sobremesa']);
+
+        $dish = Dishes::findOne($id);
+        $dish->delete();
+
+        $this->tester->dontSeeRecord('common\models\Dishes', ['name' => 'sobremesa']);
     }
 }
