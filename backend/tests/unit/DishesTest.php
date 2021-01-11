@@ -178,12 +178,12 @@ class DishesTest extends \Codeception\Test\Unit
     {
         $dish = new Dishes();
         $dish->type = 'STARTERS';
-        $dish->price = 5;
-        $dish->menuId = 1;
+        $dish->price = '12.23';
+        $dish->menuId = 2;
         $dish->name = 'prato principal';
         $dish->description = 'descriaoooo';
         $dish->save();
-        $this->tester->seeInDatabase('dishes', ['name' => 'prato principal']);
+        $this->tester->seeRecord('common\models\Dishes', ['name' => 'prato principal']);
     }
 
     function testEditDish()
@@ -191,7 +191,7 @@ class DishesTest extends \Codeception\Test\Unit
         $id = $this->tester->grabRecord('common\models\Dishes', ['name' => 'prato principal']);
 
         $dish = Dishes::findOne($id);
-        $dish->name = ('sobremesa');
+        $dish->name = 'sobremesa';
         $dish->save();
 
         $this->tester->seeRecord('common\models\Dishes', ['name' => 'sobremesa']);

@@ -387,32 +387,31 @@ class RestaurantsTest extends \Codeception\Test\Unit
     //criar, editar e eliminar na DB
     function testSavingRestaurant()
     {
-        $faker = Factory::create();
         $restaurant = new Restaurant();
 
-        $restaurant->location = $faker->address;
+        $restaurant->location = 'Leiria';
         $restaurant->name = 'mcDonals';
         $restaurant->maxPeople = 20;
         $restaurant->currentPeople = 12;
-        $restaurant->openingHour = $faker->time();
-        $restaurant->closingHour = $faker->time();
+        $restaurant->openingHour = '10:00:00';
+        $restaurant->closingHour = '20:00:00';
         $restaurant->allowsPets = 1;
         $restaurant->hasVegan = 1;
-        $restaurant->description = $faker->text;
+        $restaurant->description = 'descricaooo';
+        $restaurant->wifiPassword = 'awdd234//424';
         $restaurant->save();
         $this->tester->seeInDatabase('restaurant', ['name' => 'mcDonals']);
     }
 
     function testEditRestaurant()
     {
-        $id = $this->tester->grabRecord('common\models\Restaurant', ['name' => 'mcdonals']);
+        $id = $this->tester->grabRecord('common\models\Restaurant', ['name' => 'mcDonals']);
 
         $restaurant = Restaurant::findOne($id);
-        $restaurant->description = ('pizza');
+        $restaurant->name = 'pizza';
         $restaurant->save();
 
         $this->tester->seeRecord('common\models\Restaurant', ['name' => 'pizza']);
-        $this->tester->dontSeeRecord('common\models\Restaurant', ['name' => 'mcdonals']);
     }
 
     function testDeleteRestaurant()
