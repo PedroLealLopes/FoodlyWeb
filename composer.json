@@ -40,7 +40,9 @@
         "symfony/browser-kit": ">=2.7 <=4.2.4",
         "fortawesome/font-awesome": "5.11.1",
         "rmrevin/yii2-fontawesome": "2.10.*",
-        "codeception/module-db": "^1.1"
+        "codeception/module-db": "^1.1",
+        "codeception/module-db": "^1.1",
+        "codeception/module-webdriver": "^1.1"
     },
     "config": {
         "process-timeout": 1800,
