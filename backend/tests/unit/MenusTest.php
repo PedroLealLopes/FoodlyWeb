@@ -1,6 +1,6 @@
 <?php
 
-namespace common\tests;
+namespace backend\tests;
 
 use common\models\Menus;
 use Faker\Factory;
@@ -8,7 +8,7 @@ use Faker\Factory;
 class MenusTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \common\tests\UnitTester
+     * @var \backend\tests\UnitTester
      */
     protected $tester;
 
@@ -62,7 +62,7 @@ class MenusTest extends \Codeception\Test\Unit
     {
         $menu = new Menus();
 
-        $menu->date = "2020-13-17";
+        $menu->date = "2021-13-17";
         $this->assertFalse($menu->validate(['date']));
     }
 
@@ -70,7 +70,7 @@ class MenusTest extends \Codeception\Test\Unit
     {
         $menu = new Menus();
 
-        $menu->date = "2020-12-17";
+        $menu->date = "2021-12-17";
         $this->assertTrue($menu->validate(['date']));
     }
 
@@ -101,5 +101,37 @@ class MenusTest extends \Codeception\Test\Unit
 
         $menu->menuId =  "foo";
         $this->assertFalse($menu->validate('menuId'));
+    }
+
+    //criar, editar e eliminar na DB
+    function testSavingMenu()
+    {
+        $menu = new Menus();
+        $menu->restaurantId = 1;
+        $menu->date = '2021-12-17';
+        $menu->save();
+        $this->tester->seeInDatabase('menus', ['date' => '2021-12-17']);
+    }
+
+    function testEditMenu()
+    {
+        $id = $this->tester->grabRecord('common\models\Menus', ['date' => '2021-12-17']);
+
+        $menu = Menus::findOne($id);
+        $menu->date = ('2021-02-02');
+        $menu->save();
+
+        $this->tester->seeRecord('common\models\Menus', ['date' => '2021-02-02']);
+        $this->tester->dontSeeRecord('common\models\Menus', ['date' => '2021-12-17']);
+    }
+
+    function testDeleteMenu()
+    {
+        $id = $this->tester->grabRecord('common\models\Menus', ['date' => '2021-02-02']);
+
+        $menu = Menus::findOne($id);
+        $menu->delete();
+
+        $this->tester->dontSeeRecord('common\models\Menus', ['date' => '2021-02-02']);
     }
 }
