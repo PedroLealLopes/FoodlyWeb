@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "408634d07205ff6357b98e1b66ddeb82",
+    "content-hash": "a0acf72f930bfb66757af0bd98490744",
     "packages": [
         {
             "name": "bluerhinos/phpmqtt",
@@ -2119,16 +2119,6 @@
         },
         {
             "name": "fakerphp/faker",
-            "version": "v1.12.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "841e8bdde345cc1ea9f98e776959e7531cadea0e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/841e8bdde345cc1ea9f98e776959e7531cadea0e",
-                "reference": "841e8bdde345cc1ea9f98e776959e7531cadea0e",
             "version": "v1.13.0",
             "source": {
                 "type": "git",
@@ -2175,9 +2165,6 @@
             ],
             "support": {
                 "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.12.1"
-            },
-            "time": "2020-12-11T10:39:41+00:00"
                 "source": "https://github.com/FakerPHP/Faker/tree/v1.13.0"
             },
             "time": "2020-12-18T16:50:48+00:00"
