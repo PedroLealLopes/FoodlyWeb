@@ -5,7 +5,3 @@ modules:
         - Yii2:
             part: [orm, email, fixtures]
         - Asserts
-        - DB:
-            dsn: 'mysql:host=localhost;dbname=foodly_test'
-            user: 'root'
-            password: ''

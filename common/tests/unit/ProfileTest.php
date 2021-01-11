@@ -1,11 +1,11 @@
-<?php namespace backend\tests;
+<?php namespace common\tests;
 
 use common\models\Profiles;
 
-class ProfilesTest extends \Codeception\Test\Unit
+class ProfileTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \backend\tests\UnitTester
+     * @var \common\tests\UnitTester
      */
     protected $tester;
 
@@ -16,6 +16,7 @@ class ProfilesTest extends \Codeception\Test\Unit
         //it must exist a user id 1 in profiles table;
         $profile->userId = 1;
         $this->assertTrue($profile->validate(["userId"]));
+
     }
     
     public function testUserId_isIntAndNotExists_False()
@@ -137,39 +138,4 @@ class ProfilesTest extends \Codeception\Test\Unit
          $profile->genero = null;
          $this->assertTrue($profile->validate(["genero"]));
      }
-
-    /* //criar, editar e eliminar na DB
-    function testSavingProfile()
-    {
-        $profile = new Profiles();
-        $profile->userId = 1;
-        $profile->fullname = 'Nome Completo';
-        $profile->age = 20;
-        $profile->alergias = 'Nenhumas';
-        $profile->genero = 'M';
-        $profile->save();
-        $this->tester->seeInDatabase('profiles', ['fullname' => 'Nome Completo']);
-    }
-
-    function testEditProfile()
-    {
-        $id = $this->tester->grabRecord('common\models\Profiles', ['fullname' => 'Nome Completo']);
-
-        $profile = Profiles::findOne($id);
-        $profile->fullname = ('Nome Completo Editado');
-        $profile->save();
-
-        $this->tester->seeRecord('common\models\Profiles', ['fullname' => 'Nome Completo Editado']);
-        $this->tester->dontSeeRecord('common\models\Profiles', ['fullname' => 'Nome Completo']);
-    }
-
-    function testDeleteProfile()
-    {
-        $id = $this->tester->grabRecord('common\models\Profiles', ['fullname' => 'Nome Completo Editado']);
-
-        $profile = Profiles::findOne($id);
-        $profile->delete();
-
-        $this->tester->dontSeeRecord('common\models\Profiles', ['fullname' => 'Nome Completo Editado']);
-    }*/
 }

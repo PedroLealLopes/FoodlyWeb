@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\tests;
+namespace common\tests;
 
 use common\models\Restaurant;
 use Faker\Factory;
 use Yii;
 
-class RestaurantsTest extends \Codeception\Test\Unit
+class RestaurantTest extends \Codeception\Test\Unit
 {
     /**
-     * @var \backend\tests\UnitTester
+     * @var \common\tests\UnitTester
      */
     protected $tester;
 
@@ -382,46 +382,5 @@ class RestaurantsTest extends \Codeception\Test\Unit
         $restaurant->hasVegan = 1;
         $restaurant->description = $faker->text;
         // $restaurant->wifiPassword = $faker->password();
-    }
-
-    //criar, editar e eliminar na DB
-    function testSavingRestaurant()
-    {
-        $faker = Factory::create();
-        $restaurant = new Restaurant();
-
-        $restaurant->location = $faker->address;
-        $restaurant->name = 'mcDonals';
-        $restaurant->maxPeople = 20;
-        $restaurant->currentPeople = 12;
-        $restaurant->openingHour = $faker->time();
-        $restaurant->closingHour = $faker->time();
-        $restaurant->allowsPets = 1;
-        $restaurant->hasVegan = 1;
-        $restaurant->description = $faker->text;
-        $restaurant->save();
-        $this->tester->seeInDatabase('restaurant', ['name' => 'mcDonals']);
-    }
-
-    function testEditRestaurant()
-    {
-        $id = $this->tester->grabRecord('common\models\Restaurant', ['name' => 'mcdonals']);
-
-        $restaurant = Restaurant::findOne($id);
-        $restaurant->description = ('pizza');
-        $restaurant->save();
-
-        $this->tester->seeRecord('common\models\Restaurant', ['name' => 'pizza']);
-        $this->tester->dontSeeRecord('common\models\Restaurant', ['name' => 'mcdonals']);
-    }
-
-    function testDeleteRestaurant()
-    {
-        $id = $this->tester->grabRecord('common\models\Restaurant', ['name' => 'pizza']);
-
-        $restaurant = Restaurant::findOne($id);
-        $restaurant->delete();
-
-        $this->tester->dontSeeRecord('common\models\Restaurant', ['name' => 'pizza']);
     }
 }

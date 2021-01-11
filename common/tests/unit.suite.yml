@@ -1,11 +1,7 @@
 suite_namespace: common\tests\unit
 actor: UnitTester
+bootstrap: false
 modules:
-  enabled:
-    - Yii2:
-        part: [orm, email, fixtures]
-    - Asserts
-    - Db:
-        dsn: 'mysql:host=localhost;dbname=foodly_test'
-        user: 'root'
-        password: ''
+    enabled:
+        - Yii2:
+            part: fixtures
