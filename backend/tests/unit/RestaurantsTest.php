@@ -390,7 +390,7 @@ class RestaurantsTest extends \Codeception\Test\Unit
         $restaurant = new Restaurant();
 
         $restaurant->location = 'Leiria';
-        $restaurant->name = 'mcDonals';
+        $restaurant->name = 'Foo';
         $restaurant->maxPeople = 20;
         $restaurant->currentPeople = 12;
         $restaurant->openingHour = '10:00:00';
@@ -400,18 +400,19 @@ class RestaurantsTest extends \Codeception\Test\Unit
         $restaurant->description = 'descricaooo';
         $restaurant->wifiPassword = 'awdd234//424';
         $restaurant->save();
-        $this->tester->seeInDatabase('restaurant', ['name' => 'mcDonals']);
+        $this->tester->seeInDatabase('restaurant', ['name' => 'Foo']);
     }
 
     function testEditRestaurant()
     {
-        $id = $this->tester->grabRecord('common\models\Restaurant', ['name' => 'mcDonals']);
+        $id = $this->tester->grabRecord('common\models\Restaurant', ['name' => 'Foo']);
 
         $restaurant = Restaurant::findOne($id);
         $restaurant->name = 'pizza';
         $restaurant->save();
 
         $this->tester->seeRecord('common\models\Restaurant', ['name' => 'pizza']);
+        $this->tester->dontSeeInDatabase('restaurant', ['name' => 'Foo']);
     }
 
     function testDeleteRestaurant()
