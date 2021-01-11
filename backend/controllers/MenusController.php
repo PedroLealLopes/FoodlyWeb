@@ -37,6 +37,9 @@ class MenusController extends Controller
     {
         $dataProvider = new ActiveDataProvider([
             'query' => Menus::find(),
+            'pagination' => [
+                'pageSize' => 100,
+            ],
         ]);
 
         return $this->render('index', [

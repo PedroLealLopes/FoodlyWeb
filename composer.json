@@ -1,7 +1,12 @@
 {
     "name": "yiisoft/yii2-app-advanced",
     "description": "Yii 2 Advanced Project Template",
-    "keywords": ["yii2", "framework", "advanced", "project template"],
+    "keywords": [
+        "yii2",
+        "framework",
+        "advanced",
+        "project template"
+    ],
     "homepage": "http://www.yiiframework.com/",
     "type": "project",
     "license": "BSD-3-Clause",
@@ -19,6 +24,8 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "yiisoft/yii2-jui": "~2.0.0",
+        "fortawesome/font-awesome": "5.11.1",
+        "rmrevin/yii2-fontawesome": "2.10.*",
         "bluerhinos/phpmqtt": "@dev"
     },
     "require-dev": {
@@ -31,6 +38,9 @@
         "codeception/module-filesystem": "^1.0",
         "codeception/verify": "~0.5.0 || ~1.1.0",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
+        "fortawesome/font-awesome": "5.11.1",
+        "rmrevin/yii2-fontawesome": "2.10.*",
+        "codeception/module-db": "^1.1",
         "codeception/module-db": "^1.1",
         "codeception/module-webdriver": "^1.1"
     },
