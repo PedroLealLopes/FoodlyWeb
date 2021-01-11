@@ -11,6 +11,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'modules' => [
+        'api' => [
+            'class' => 'frontend\modules\api\Module',
+        ],
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -36,14 +41,41 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/restaurants',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET location/{cidade}' => 'location',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                        '{cidade}' => '<cidade:\\w+>',
+                    ],
+                ], 
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/orders',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET client/{id}' => 'client',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],[
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/menus',
+                    'pluralize' => false,
+                ],
+                
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

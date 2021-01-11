@@ -2,7 +2,7 @@
 return [
     'components' => [
         'db' => [
-            'dsn' => 'mysql:host=localhost;dbname=foodly',
+            'dsn' => 'mysql:host=localhost;dbname=foodly_test',
         ],
     ],
 ];

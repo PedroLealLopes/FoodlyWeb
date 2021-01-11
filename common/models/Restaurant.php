@@ -47,6 +47,7 @@ class Restaurant extends \yii\db\ActiveRecord
             [['allowsPets', 'hasVegan'], 'boolean'],
             [['openingHour', 'closingHour'], 'safe'],
             [['description'], 'string'],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['location', 'name', 'wifiPassword'], 'string', 'max' => 255],
             ['currentPeople', 'compare', 'compareAttribute' => 'maxPeople', 'operator' => '<', 'type' => 'number'],
             ['maxPeople', 'compare', 'compareAttribute' => 'currentPeople', 'operator' => '>', 'type' => 'number'],
@@ -60,6 +61,7 @@ class Restaurant extends \yii\db\ActiveRecord
     {
         return [
             'restaurantId' => 'Restaurant ID',
+            'image' => 'Image',
             'location' => 'Location',
             'name' => 'Name',
             'maxPeople' => 'Max People',
