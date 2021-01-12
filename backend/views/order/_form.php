@@ -13,8 +13,6 @@ use yii\jui\DatePicker;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'orderId')->textInput() ?>
-
     <?= $form->field($model, 'date')->textInput()?>
 
     <?= $form->field($model, 'userId')->textInput() ?>

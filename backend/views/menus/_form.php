@@ -18,10 +18,10 @@ use yii\jui\DatePicker;
         'dateFormat' => 'yyyy-MM-dd',
     ]) ?>
 
-    <div class="form-group field-menus-date required">
+    <!-- <div class="form-group field-menus-date required">
         <label for="start">Start date:</label>
         <input type="date" class="form-control" id="start" name="trip-start">
-    </div>
+    </div> -->
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
