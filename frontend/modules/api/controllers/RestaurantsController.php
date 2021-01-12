@@ -38,7 +38,7 @@ class RestaurantsController extends ActiveController
          $imageName = $restaurant->image;
          if($imageName != null){
 
-            $path = "C:\\wamp64\\www\\FoodlyWeb\\common\\images\\restaurants\\$imageName";
+            $path = "../../common/images/restaurants/$imageName";
             $type = pathinfo($path, PATHINFO_EXTENSION);
             $data = file_get_contents($path);
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
