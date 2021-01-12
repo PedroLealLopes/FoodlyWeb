@@ -2,6 +2,7 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\Restaurant;
 use yii\rest\ActiveController;
 
 /**
@@ -10,6 +11,45 @@ use yii\rest\ActiveController;
 class RestaurantsController extends ActiveController
 {
    public $modelClass = 'common\models\Restaurant';
+
+   public function actions()
+   {
+      $actions = parent::actions();
+
+      // disable the "delete" and "create" actions
+      unset($actions['delete'], $actions['create']);
+
+      // customize the data provider preparation with the "prepareDataProvider()" method
+      $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
+
+      return $actions;
+   }
+
+   public function prepareDataProvider()
+   {
+      $query = Restaurant::find();
+      $dataProvider = new \yii\data\ActiveDataProvider([
+           'query' => $query,
+           'pagination' => ['pageSize' => 0]
+      ]);
+
+      $models = $dataProvider->getModels();
+      foreach($models as $restaurant){
+         $imageName = $restaurant->image;
+         if($imageName != null){
+
+            $path = "C:\\wamp64\\www\\FoodlyWeb\\common\\images\\restaurants\\$imageName";
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+            $restaurant->image = $base64;
+         }      
+      }
+      
+  
+      return $models;
+   }
 
    //custom action para pesquisar restaurantes com base na localização
    public function actionLocation($cidade){
