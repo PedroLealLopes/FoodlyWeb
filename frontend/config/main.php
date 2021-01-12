@@ -72,6 +72,13 @@ return [
                     'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/menus',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
                 ],
                 
             ],
