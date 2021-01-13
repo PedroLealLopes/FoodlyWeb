@@ -12,19 +12,6 @@ class ProfilesController extends ActiveController
 {
    public $modelClass = 'common\models\Profiles';
 
-   public function behaviors()
-   {
-      return [ 
-         [
-               'class' => \yii\filters\ContentNegotiator::className(),
-               'only' => ['index', 'view'],
-               'formats' => [
-                  'application/json' => \yii\web\Response::FORMAT_JSON,
-               ],
-            ],
-         ];
-   }
-
    public function actions()
    {
       $actions = parent::actions();
