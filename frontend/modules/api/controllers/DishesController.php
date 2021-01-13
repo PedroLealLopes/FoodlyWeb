@@ -11,7 +11,7 @@ use Yii;
  */
 class DishesController extends ActiveController
 {
-   public $modelClass = 'common\models\Dishes'
+   public $modelClass = 'common\models\Dishes';
    
    public function behaviors()
    {
