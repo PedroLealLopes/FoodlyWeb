@@ -83,6 +83,17 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/profiles',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/dishes',
                     'pluralize' => false,
                     'extraPatterns' => [
