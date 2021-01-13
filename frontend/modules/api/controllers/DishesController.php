@@ -11,7 +11,20 @@ use Yii;
  */
 class DishesController extends ActiveController
 {
-   public $modelClass = 'common\models\Dishes';
+   public $modelClass = 'common\models\Dishes'
+   
+   public function behaviors()
+   {
+       return [
+           [
+               'class' => \yii\filters\ContentNegotiator::className(),
+               'only' => ['index', 'view'],
+               'formats' => [
+                   'application/json' => \yii\web\Response::FORMAT_JSON,
+               ],
+           ],
+       ];
+   };
 
    //custom action para saber o total de registos.
    public function actionTotal(){
