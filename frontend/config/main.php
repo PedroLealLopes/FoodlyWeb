@@ -68,7 +68,8 @@ return [
                     'tokens' => [
                         '{id}' => '<id:\\d+>',
                     ],
-                ],[
+                ],
+                [
                     'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/menus',
                     'pluralize' => false,
