@@ -11,6 +11,19 @@ class MenusController extends ActiveController
 {
    public $modelClass = 'common\models\Menus';
 
+   public function behaviors()
+   {
+       return [
+           [
+               'class' => \yii\filters\ContentNegotiator::className(),
+               'only' => ['index', 'view'],
+               'formats' => [
+                   'application/json' => \yii\web\Response::FORMAT_JSON,
+               ],
+           ],
+       ];
+   }
+
    //custom action para saber o total de registos.
    public function actionTotal(){
       $menusModel = new $this->modelClass;

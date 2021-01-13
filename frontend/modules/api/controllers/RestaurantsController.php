@@ -12,26 +12,9 @@ class RestaurantsController extends ActiveController
 {
    public $modelClass = 'common\models\Restaurant';
 
-   
-   public function behaviors()
-   {
-       return [
-           [
-               'class' => \yii\filters\ContentNegotiator::className(),
-               'only' => ['index', 'view'],
-               'formats' => [
-                   'application/json' => \yii\web\Response::FORMAT_JSON,
-               ],
-           ],
-       ];
-   }
-
    public function actions()
    {
       $actions = parent::actions();
-
-      // disable the "delete" and "create" actions
-      unset($actions['delete'], $actions['create']);
 
       // customize the data provider preparation with the "prepareDataProvider()" method
       $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
@@ -59,8 +42,7 @@ class RestaurantsController extends ActiveController
 
             $restaurant->image = $base64;
          }      
-      }
-      
+      }      
   
       return $models;
    }
