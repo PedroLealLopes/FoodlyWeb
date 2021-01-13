@@ -11,19 +11,6 @@ class UsersController extends ActiveController
 {
    public $modelClass = 'common\models\User';
 
-      public function behaviors()
-   {
-      return [ 
-         [
-               'class' => \yii\filters\ContentNegotiator::className(),
-               'only' => ['index', 'view'],
-               'formats' => [
-                  'application/json' => \yii\web\Response::FORMAT_JSON,
-               ],
-            ],
-         ];
-   }
-
    public function actionTotal(){
       $userModel = new $this->modelClass;
       $recs = $userModel::find()->all();
