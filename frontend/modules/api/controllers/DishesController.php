@@ -12,7 +12,7 @@ use Yii;
 class DishesController extends ActiveController
 {
    public $modelClass = 'common\models\Dishes';
-   
+
    public function behaviors()
    {
        return [
@@ -24,7 +24,7 @@ class DishesController extends ActiveController
                ],
            ],
        ];
-   };
+   }
 
    //custom action para saber o total de registos.
    public function actionTotal(){
