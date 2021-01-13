@@ -29,8 +29,8 @@ class ProfilesController extends ActiveController
    {
       $query = Profiles::find();
       $dataProvider = new \yii\data\ActiveDataProvider([
-           'query' => $query,
-           'pagination' => ['pageSize' => 0]
+         'query' => $query,
+         'pagination' => ['pageSize' => 0]
       ]);
 
       $models = $dataProvider->getModels();
