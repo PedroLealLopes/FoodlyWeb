@@ -73,9 +73,33 @@ return [
                     'tokens' => [
                         '{id}' => '<id:\\d+>',
                     ],
-                ],[
+                ],
+                [
                     'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/menus',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/profiles',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/dishes',
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET total' => 'total',
