@@ -30,9 +30,6 @@ class RestaurantsController extends ActiveController
    {
       $actions = parent::actions();
 
-      // disable the "delete" and "create" actions
-      unset($actions['delete'], $actions['create']);
-
       // customize the data provider preparation with the "prepareDataProvider()" method
       $actions['index']['prepareDataProvider'] = [$this, 'prepareDataProvider'];
 
@@ -59,8 +56,7 @@ class RestaurantsController extends ActiveController
 
             $restaurant->image = $base64;
          }      
-      }
-      
+      }      
   
       return $models;
    }
