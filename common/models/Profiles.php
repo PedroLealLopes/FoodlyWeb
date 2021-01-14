@@ -44,6 +44,7 @@ class Profiles extends \yii\db\ActiveRecord
             ['genero', 'in', 'range' => ['M', 'F']],
             [['fullname'], 'string', 'max' => 45],
             [['userId'], 'unique'],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
@@ -56,6 +57,7 @@ class Profiles extends \yii\db\ActiveRecord
         return [
             'userId' => 'User ID',
             'fullname' => 'Fullname',
+            'image' => 'Image',
             'age' => 'Age',
             'alergias' => 'Alergias',
             'genero' => 'Genero',

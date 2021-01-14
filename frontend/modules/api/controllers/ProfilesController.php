@@ -34,7 +34,18 @@ class ProfilesController extends ActiveController
       ]);
 
       $models = $dataProvider->getModels();
-  
+      foreach($models as $profile){
+         $imageName = $profile->image;
+         if($imageName != null){
+
+            $path = "../../common/images/profiles/$imageName";
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+            $profile->image = $base64;
+         }      
+      }  
       return $models;
    }
 
