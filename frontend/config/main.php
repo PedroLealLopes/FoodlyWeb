@@ -66,6 +66,12 @@ return [
                     'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/users',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST login' => 'login',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
                 ], 
                 [
                     'class' => 'yii\rest\UrlRule', 
