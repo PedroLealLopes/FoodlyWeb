@@ -22,7 +22,7 @@ class DishesController extends ActiveController
 
    //custom action que permite receber os pedidos pelo userId
    public function actionRestaurant($id){
-      $menusModel = new $this->modelClass;
+      // $menusModel = new $this->modelClass;
       $connection = Yii::$app->getDb();
       $command = $connection->createCommand("
          SELECT *
@@ -44,6 +44,6 @@ class DishesController extends ActiveController
          );
       ");
       $recs = $command->queryAll();
-      return['records'=> $recs];
+      return $recs;
    }
 }
