@@ -37,6 +37,6 @@ class MenusController extends ActiveController
                );
       ");
       $recs = $command->queryAll();
-      return['records'=> $recs];
+      return $recs;
    }
 }
