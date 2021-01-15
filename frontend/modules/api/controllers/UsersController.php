@@ -27,7 +27,8 @@ class UsersController extends ActiveController
       {
          $username = $post["username"];
          $password = base64_decode($post["password"]);      
-         $user = User::find()->where(['username' => $username])->one();
+         $user = new User();
+         $user = $user->findByUsername($username);
          if($user->validatePassword($password)){
             
             $connection = Yii::$app->getDb();
