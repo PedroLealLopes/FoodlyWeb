@@ -145,6 +145,19 @@ return [
                         '{id}' => '<id:\\d+>',
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/restaurant-reviews',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                        'GET user/{id}' => 'user',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
             ],
         ],
     ],
