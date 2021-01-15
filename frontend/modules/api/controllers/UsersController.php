@@ -41,7 +41,6 @@ class UsersController extends ActiveController
             return $json;
          }
       }
-      else
-         return $post;
+      return ["id"=>-1];
    }
 }
