@@ -91,6 +91,9 @@ class Profiles extends \yii\db\ActiveRecord
     public function getDishReviews()
     {
         return $this->hasMany(DishReview::className(), ['profiles_userId' => 'userId']);
+
+
+
     }
 
     /**
