@@ -36,6 +36,7 @@ class RestaurantReviews extends \yii\db\ActiveRecord
             [['restaurant_restaurantId', 'profiles_userId'], 'integer'],
             [['stars'], 'number'],
             [['comment'], 'string'],
+            [['creation_date'], 'date'],
             [['restaurant_restaurantId', 'profiles_userId'], 'unique', 'targetAttribute' => ['restaurant_restaurantId', 'profiles_userId']],
             [['profiles_userId'], 'exist', 'skipOnError' => true, 'targetClass' => Profiles::className(), 'targetAttribute' => ['profiles_userId' => 'userId']],
             [['restaurant_restaurantId'], 'exist', 'skipOnError' => true, 'targetClass' => Restaurant::className(), 'targetAttribute' => ['restaurant_restaurantId' => 'restaurantId']],
@@ -51,13 +52,14 @@ class RestaurantReviews extends \yii\db\ActiveRecord
             'restaurant_restaurantId' => 'Restaurant Restaurant ID',
             'profiles_userId' => 'Profiles User ID',
             'stars' => 'Stars',
+            'creation_date' =>'date',
             'comment' => 'Comment',
         ];
     }
     
     public function fields()
     {
-        return ['restaurant_restaurantId', 'profiles_userId', 'stars', 'comment',
+        return ['restaurant_restaurantId', 'profiles_userId', 'stars', 'comment', 'creation_date',
             'username' => function($model){
                 $profile = $model->profiles_userId;
                 $profile = new Profiles();
