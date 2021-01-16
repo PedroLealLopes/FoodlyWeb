@@ -45,8 +45,8 @@ class RestaurantReviewsController extends ActiveController
       $recs += ['username' => $profile->fullname,
                   'image' => $profile->image
                ];
-      }
-
+               
       return $recs;
+      }
    }
 }
