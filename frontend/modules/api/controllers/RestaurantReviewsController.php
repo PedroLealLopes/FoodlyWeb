@@ -31,22 +31,23 @@ class RestaurantReviewsController extends ActiveController
       $RestaurantReviewsModel = new $this->modelClass;
       $profile = new Profiles();
       $profile = $profile->findIdentity($id);
-
-      $imageName = $profile->image;
-      if($imageName != null){
-
-         $path = "../../common/images/profiles/$imageName";
-         $type = pathinfo($path, PATHINFO_EXTENSION);
-         $data = file_get_contents($path);
-         $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
-         $profile->image = $base64;
-      $recs = $RestaurantReviewsModel::find()->where("profiles_userId = $id")->all();
-      $recs += ['username' => $profile->fullname,
-                  'image' => $profile->image
-               ];
-               
-      return $recs;
+      if($profile != null){
+         $imageName = $profile->image;
+         if($imageName != null){
+            $path = "../../common/images/profiles/$imageName";
+            $type = pathinfo($path, PATHINFO_EXTENSION);
+            $data = file_get_contents($path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+   
+            $profile->image = $base64;
+         $recs = $RestaurantReviewsModel::find()->where("profiles_userId = $id")->all();
+         $recs += ['username' => $profile->fullname,
+                     'image' => $profile->image
+                  ];
+                  
+         return $recs;
+         }
       }
+      return -1;
    }
 }
