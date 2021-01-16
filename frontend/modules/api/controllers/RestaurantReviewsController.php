@@ -31,7 +31,9 @@ class RestaurantReviewsController extends ActiveController
       $RestaurantReviewsModel = new $this->modelClass;
       $profile = new Profiles();
       $profile = $profile->findIdentity($id);
+      $recs = $RestaurantReviewsModel::find()->where("profiles_userId = $id")->all();
       if($profile != null){
+         $recs += ['username' => $profile->fullname];
          $imageName = $profile->image;
          if($imageName != null){
             $path = "../../common/images/profiles/$imageName";
@@ -40,8 +42,7 @@ class RestaurantReviewsController extends ActiveController
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
    
             $profile->image = $base64;
-         $recs = $RestaurantReviewsModel::find()->where("profiles_userId = $id")->all();
-         $recs += ['username' => $profile->fullname,
+         $recs += [
                      'image' => $profile->image
                   ];
                   
