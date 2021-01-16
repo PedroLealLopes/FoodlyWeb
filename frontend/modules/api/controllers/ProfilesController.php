@@ -2,6 +2,7 @@
 
 namespace frontend\modules\api\controllers;
 
+use Yii;
 use common\models\Profiles;
 use yii\rest\ActiveController;
 
@@ -37,16 +38,29 @@ class ProfilesController extends ActiveController
       foreach($models as $profile){
          $imageName = $profile->image;
          if($imageName != null){
-
-            $path = "../../common/images/profiles/$imageName";
-            $type = pathinfo($path, PATHINFO_EXTENSION);
-            $data = file_get_contents($path);
-            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
+            $base64 = 'data:image/png;base64,' . base64_encode($profile->image);
             $profile->image = $base64;
          }      
       }  
       return $models;
+   }
+
+   public function actionUpload($id){
+      $request = Yii::$app->request;
+      $post = $request->post();
+      $img = $post["image"];
+      
+
+      
+      $pos = strpos($img, 'base64,');
+      $img = substr($img, $pos + 7);
+
+      $blob = base64_decode($img);
+      
+      $profile = Profiles::findIdentity($id);
+      $profile->image = $blob;
+   
+      return $profile->save();
    }
 
 }

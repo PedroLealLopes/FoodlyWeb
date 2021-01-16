@@ -33,13 +33,24 @@ class UsersController extends ActiveController
          if($user != null){
             if($user->validatePassword($password)){               
                $connection = Yii::$app->getDb();
+               $image = $connection->createCommand("
+                  SELECT image
+                  FROM user INNER JOIN profiles ON user.id = profiles.userId
+                  WHERE username LIKE '$username';
+               ");
                $command = $connection->createCommand("
-                  SELECT id, username, email, fullname, age, alergias, genero, telefone, morada, image
+                  SELECT id, username, email, fullname, age, alergias, genero, telefone, morada
                   FROM user INNER JOIN profiles ON user.id = profiles.userId
                   WHERE username LIKE '$username';
                ");
                $recs = $command->query();
+               $image = $image->query();
                $json = $recs->read();
+
+               $imageJson = $image->read();
+               $image = base64_encode(array_values($imageJson)[0]);
+               $json += ['image' => $image];
+
                return $json;
             }
          }

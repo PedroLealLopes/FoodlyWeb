@@ -39,12 +39,11 @@ class Profiles extends \yii\db\ActiveRecord
             'image' => function ($model) { 
                 $imageName = $model->image;
                 if($imageName != null){
-                    $path = "../../common/images/profiles/$imageName";
-                    $type = pathinfo($path, PATHINFO_EXTENSION);
-                    $data = file_get_contents($path);
-                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        
-                    $model->image = $base64;
+                    $imageName = $model->image;
+                    if($imageName != null){
+                        $base64 = 'data:image/png;base64,' . base64_encode($model->image);
+                        $model->image = $base64;
+                    }      
                     return $model->image;
                 }
             },
@@ -66,6 +65,15 @@ class Profiles extends \yii\db\ActiveRecord
             [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
+    }
+
+    
+    /**
+     * {@inheritdoc}
+     */
+    public static function findIdentity($id)
+    {
+        return static::findOne(['userId' => $id]);
     }
 
     /**
