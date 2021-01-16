@@ -29,17 +29,18 @@ class UsersController extends ActiveController
          $password = base64_decode($post["password"]);      
          $user = new User();
          $user = $user->findByUsername($username);
-         if($user->validatePassword($password)){
-            
-            $connection = Yii::$app->getDb();
-            $command = $connection->createCommand("
-               SELECT id, username, email, fullname, age, alergias, genero, telefone, morada, image
-               FROM user INNER JOIN profiles ON user.id = profiles.userId
-               WHERE username LIKE '$username';
-            ");
-            $recs = $command->query();
-            $json = $recs->read();
-            return $json;
+         if($user != null){
+            if($user->validatePassword($password)){               
+               $connection = Yii::$app->getDb();
+               $command = $connection->createCommand("
+                  SELECT id, username, email, fullname, age, alergias, genero, telefone, morada, image
+                  FROM user INNER JOIN profiles ON user.id = profiles.userId
+                  WHERE username LIKE '$username';
+               ");
+               $recs = $command->query();
+               $json = $recs->read();
+               return $json;
+            }
          }
       }
       return ["id"=>-1];
