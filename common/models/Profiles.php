@@ -83,6 +83,12 @@ class Profiles extends \yii\db\ActiveRecord
         ];
     }
 
+    
+    public static function findIdentity($id)
+    {
+        return static::findOne(['userId' => $id]);
+    }
+
     /**
      * Gets query for [[DishReviews]].
      *
@@ -91,9 +97,6 @@ class Profiles extends \yii\db\ActiveRecord
     public function getDishReviews()
     {
         return $this->hasMany(DishReview::className(), ['profiles_userId' => 'userId']);
-
-
-
     }
 
     /**
