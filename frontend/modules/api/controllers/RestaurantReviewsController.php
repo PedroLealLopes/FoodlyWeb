@@ -51,7 +51,7 @@ class RestaurantReviewsController extends ActiveController
          else{
             $recs += ['image' => null];
          }
-      }
+      }  
       return -1;
    }
 }
