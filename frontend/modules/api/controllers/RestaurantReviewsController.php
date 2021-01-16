@@ -46,11 +46,11 @@ class RestaurantReviewsController extends ActiveController
                      'image' => $profile->image
                   ];
                   
-         return $recs;
          }
          else{
             $recs += ['image' => null];
          }
+         return $recs;
       }  
       return -1;
    }
