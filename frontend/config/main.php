@@ -59,11 +59,6 @@ return [
                 ], 
                 [
                     'class' => 'yii\rest\UrlRule', 
-                    'controller' => 'api/profiles',
-                    'pluralize' => false,
-                ], 
-                [
-                    'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/users',
                     'pluralize' => false,
                     'extraPatterns' => [
@@ -103,6 +98,7 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET total' => 'total',
+                        'GET profiles/{id}' => 'image',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\d+>',

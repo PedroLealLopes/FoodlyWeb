@@ -32,6 +32,25 @@ class Profiles extends \yii\db\ActiveRecord
         return 'profiles';
     }
 
+    public function fields()
+    {
+        return [
+            'userId', 'fullname', 'age', 'alergias', 'genero', 'telefone', 'morada',
+            'image' => function ($model) { 
+                $imageName = $model->image;
+                if($imageName != null){
+                    $path = "../../common/images/profiles/$imageName";
+                    $type = pathinfo($path, PATHINFO_EXTENSION);
+                    $data = file_get_contents($path);
+                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
+                    $model->image = $base64;
+                    return $model->image;
+                }
+            },
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
