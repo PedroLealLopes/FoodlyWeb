@@ -2,7 +2,6 @@
 
 namespace frontend\modules\api\controllers;
 
-use common\models\Profiles;
 use yii\rest\ActiveController;
 
 /**
@@ -29,29 +28,7 @@ class RestaurantReviewsController extends ActiveController
    //custom action que permite receber os pedidos pelo userId
    public function actionUser($id){
       $RestaurantReviewsModel = new $this->modelClass;
-      $profile = new Profiles();
-      $profile = $profile->findIdentity($id);
       $recs = $RestaurantReviewsModel::find()->where("profiles_userId = $id")->all();
-      if($profile != null){
-         $recs += ['username' => $profile->fullname];
-         $imageName = $profile->image;
-         if($imageName != null){
-            $path = "../../common/images/profiles/$imageName";
-            $type = pathinfo($path, PATHINFO_EXTENSION);
-            $data = file_get_contents($path);
-            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-   
-            $profile->image = $base64;
-         $recs += [
-                     'image' => $profile->image
-                  ];
-                  
-         }
-         else{
-            $recs += ['image' => null];
-         }
-         return $recs;
-      }  
-      return -1;
+      return $recs;
    }
 }

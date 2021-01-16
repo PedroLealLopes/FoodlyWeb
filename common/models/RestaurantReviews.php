@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\debug\models\search\Profile;
 
 /**
  * This is the model class for table "restaurant_reviews".
@@ -51,6 +52,33 @@ class RestaurantReviews extends \yii\db\ActiveRecord
             'profiles_userId' => 'Profiles User ID',
             'stars' => 'Stars',
             'comment' => 'Comment',
+        ];
+    }
+    
+    public function fields()
+    {
+        return ['restaurant_restaurantId', 'profiles_userId', 'stars', 'comment',
+            'username' => function($model){
+                $profile = $model->profiles_userId;
+                $profile = new Profiles();
+                $profile = $profile->findIdentity($model->profiles_userId);
+                return $profile->fullname;
+            },
+            'image' => function ($model) { 
+                $profile = $model->profiles_userId;
+                $profile = new Profiles();
+                $profile = $profile->findIdentity($model->profiles_userId);
+                $imageName = $profile->image;
+                if($imageName != null){
+                    $path = "../../common/images/profiles/$imageName";
+                    $type = pathinfo($path, PATHINFO_EXTENSION);
+                    $data = file_get_contents($path);
+                    $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+                    $profile->image = $base64;
+                    return $profile->image;
+                }
+            },
         ];
     }
 
