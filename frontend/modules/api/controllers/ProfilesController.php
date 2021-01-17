@@ -38,7 +38,7 @@ class ProfilesController extends ActiveController
       foreach($models as $profile){
          $imageName = $profile->image;
          if($imageName != null){
-            $base64 = 'data:image/png;base64,' . base64_encode($profile->image);
+            $base64 = 'data:image/jpeg;base64,' . base64_encode($profile->image);
             $profile->image = $base64;
          }      
       }  
@@ -49,16 +49,14 @@ class ProfilesController extends ActiveController
       $request = Yii::$app->request;
       $post = $request->post();
       $img = $post["image"];
-      
 
-      
-      $pos = strpos($img, 'base64,');
-      $img = substr($img, $pos + 7);
+      // $pos = strpos($img, 'base64,');
+      // $img = substr($img, $pos + 7);
 
-      $blob = base64_decode($img);
+      // $blob = base64_decode($img);
       
       $profile = Profiles::findIdentity($id);
-      $profile->image = $blob;
+      $profile->image = $img;
    
       return $profile->save();
    }

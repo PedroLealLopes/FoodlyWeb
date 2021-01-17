@@ -35,18 +35,7 @@ class Profiles extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            'userId', 'fullname', 'age', 'alergias', 'genero', 'telefone', 'morada',
-            'image' => function ($model) { 
-                $imageName = $model->image;
-                if($imageName != null){
-                    $imageName = $model->image;
-                    if($imageName != null){
-                        $base64 = 'data:image/png;base64,' . base64_encode($model->image);
-                        $model->image = $base64;
-                    }      
-                    return $model->image;
-                }
-            },
+            'userId', 'fullname', 'age', 'alergias', 'genero', 'telefone', 'morada', "image"
         ];
     }
 
@@ -58,11 +47,11 @@ class Profiles extends \yii\db\ActiveRecord
         return [
             [['fullname', 'age'], 'required'],
             [['age'], 'integer'],
-            [['alergias'], 'string'],
+            [['alergias', 'telefone', 'morada'], 'string'],
             ['genero', 'in', 'range' => ['M', 'F']],
             [['fullname'], 'string', 'max' => 45],
             [['userId'], 'unique'],
-            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }

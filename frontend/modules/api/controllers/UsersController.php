@@ -46,13 +46,14 @@ class UsersController extends ActiveController
                $recs = $command->query();
                $image = $image->query();
                $json = $recs->read();
+               
 
                $imageJson = $image->read();
-               $image = base64_encode(array_values($imageJson)[0]);
-               $json += ['image' => $image];
+               // $image = base64_encode(array_values($imageJson)[0]);
+               $json += ['image' => array_values($imageJson)[0]];
 
                return $json;
-            }
+            }  
          }
       }
       return ["id"=>-1];
