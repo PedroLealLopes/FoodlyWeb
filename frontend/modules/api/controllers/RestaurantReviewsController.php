@@ -14,10 +14,9 @@ class RestaurantReviewsController extends ActiveController
    protected function verbs() {
       $verbs = parent::verbs();
       $verbs =  [
-         'index' => ['GET', 'POST', 'HEAD'],
-         'view' => ['GET', 'HEAD'],
          'create' => ['POST'],
-         'update' => ['PUT', 'PATCH']
+         'update' => ['PUT', 'PATCH'],
+         'delete' => ['DELETE']
       ];
       return $verbs;
    }
