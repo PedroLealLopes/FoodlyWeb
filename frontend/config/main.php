@@ -99,6 +99,7 @@ return [
                     'extraPatterns' => [
                         'GET total' => 'total',
                         'GET profiles/{id}' => 'image',
+                        'PUT {id}/upload' => 'upload',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\d+>',

@@ -2,12 +2,26 @@
 
 /* @var $this yii\web\View */
 
+use common\models\Profiles;
+use yii\bootstrap\Html;
+use yii\widgets\DetailView;
+
 $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
     <div class="jumbotron">
         <h1>Congratulations!</h1>
+        <?php  
+        
+            $profile = new Profiles();
+            if(isset(Yii::$app->user->identity->id)){
+                $profile = $profile->findIdentity(Yii::$app->user->identity->id);
+            echo "<img src=\"data:image/png;base64,". $profile->image ."\" alt=\"profile picture\">";
+
+            }
+            
+        ?>
 
         <p class="lead">You have successfully created your Yii-powered application.</p>
 
