@@ -56,15 +56,6 @@ class Profiles extends \yii\db\ActiveRecord
         ];
     }
 
-    
-    /**
-     * {@inheritdoc}
-     */
-    public static function findIdentity($id)
-    {
-        return static::findOne(['userId' => $id]);
-    }
-
     /**
      * {@inheritdoc}
      */
