@@ -11,6 +11,17 @@ class RestaurantReviewsController extends ActiveController
 {
    public $modelClass = 'common\models\RestaurantReviews';
 
+   protected function verbs() {
+      $verbs = parent::verbs();
+      $verbs =  [
+         'index' => ['GET', 'POST', 'HEAD'],
+         'view' => ['GET', 'HEAD'],
+         'create' => ['POST'],
+         'update' => ['PUT', 'PATCH']
+      ];
+      return $verbs;
+   }
+
    //custom action para saber o total de registos.
    public function actionTotal(){
       $RestaurantReviewsModel = new $this->modelClass;
