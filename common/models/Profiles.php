@@ -35,18 +35,7 @@ class Profiles extends \yii\db\ActiveRecord
     public function fields()
     {
         return [
-            'userId', 'fullname', 'age', 'alergias', 'genero', 'telefone', 'morada',
-            'image' => function ($model) { 
-                $imageName = $model->image;
-                if($imageName != null){
-                    $imageName = $model->image;
-                    if($imageName != null){
-                        $base64 = 'data:image/jpeg;base64,' . base64_encode($model->image);
-                        $model->image = $base64;
-                    }      
-                    return $model->image;
-                }
-            },
+            'userId', 'fullname', 'age', 'alergias', 'genero', 'telefone', 'morada', 'image'
         ];
     }
 

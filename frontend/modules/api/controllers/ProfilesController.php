@@ -18,10 +18,10 @@ class ProfilesController extends ActiveController
       $post = $request->post();
       $img = $post["image"];
 
-      $blob = base64_decode($img);
+      // $blob = base64_decode($img);
       
       $profile = Profiles::findIdentity($id);
-      $profile->image = $blob;
+      $profile->image = $img;
    
       return $profile->save();
    }
