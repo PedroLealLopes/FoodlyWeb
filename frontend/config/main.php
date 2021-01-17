@@ -125,9 +125,12 @@ return [
                         'GET total' => 'total',
                         'GET restaurant/{id}' => 'restaurant',
                         'GET user/{id}' => 'user',
+                        'POST delete' => 'apagar',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\d+>',
+                        '{profile_id}' => '<profile_id:\\d+>',
+                        '{restaurant_id}' => '<restaurant_id:\\d+>',
                     ],
                 ],
                 [
