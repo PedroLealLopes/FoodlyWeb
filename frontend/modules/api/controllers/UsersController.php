@@ -49,8 +49,8 @@ class UsersController extends ActiveController
                
 
                $imageJson = $image->read();
-               $image = base64_encode(array_values($imageJson)[0]);
-               $json += ['image' => $image];
+               //$image = base64_encode(array_values($imageJson)[0]);
+               $json += ['image' => array_values($imageJson)[0]];
 
                return $json;
             }  
