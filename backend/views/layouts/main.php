@@ -63,11 +63,11 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                    <span>CRUD</span>
+                    <span>Gestão</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
+                        <h6 class="collapse-header">Modelos:</h6>
                         <a class="collapse-item" href="profiles">Profiles</a>
                         <a class="collapse-item" href="restaurant">Restaurants</a>
                         <a class="collapse-item" href="menus">Menus</a>
@@ -244,7 +244,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= is_null(Yii::$app->user->identity) ? 'Guest' : Yii::$app->user->identity->username
+                                <span name="Span[username]" class="mr-2 d-none d-lg-inline text-gray-600 small"><?= is_null(Yii::$app->user->identity) ? 'Guest' : Yii::$app->user->identity->username
                                 
                                 ?></span>
                                 <?= Html::img(yii\helpers\Url::base().'img/undraw_profile.svg', ['class'=>'img-profile rounded-circle']);?>

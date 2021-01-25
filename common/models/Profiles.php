@@ -32,6 +32,13 @@ class Profiles extends \yii\db\ActiveRecord
         return 'profiles';
     }
 
+    public function fields()
+    {
+        return [
+            'userId', 'fullname', 'age', 'alergias', 'genero', 'telefone', 'morada', 'image'
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -40,10 +47,11 @@ class Profiles extends \yii\db\ActiveRecord
         return [
             [['fullname', 'age'], 'required'],
             [['age'], 'integer'],
-            [['alergias'], 'string'],
+            [['alergias', 'telefone', 'morada'], 'string'],
             ['genero', 'in', 'range' => ['M', 'F']],
             [['fullname'], 'string', 'max' => 45],
             [['userId'], 'unique'],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg'],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
@@ -56,10 +64,17 @@ class Profiles extends \yii\db\ActiveRecord
         return [
             'userId' => 'User ID',
             'fullname' => 'Fullname',
+            'image' => 'Image',
             'age' => 'Age',
             'alergias' => 'Alergias',
             'genero' => 'Genero',
         ];
+    }
+
+    
+    public static function findIdentity($id)
+    {
+        return static::findOne(['userId' => $id]);
     }
 
     /**

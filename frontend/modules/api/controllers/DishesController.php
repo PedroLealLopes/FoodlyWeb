@@ -2,28 +2,34 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\Dishes;
 use yii\rest\ActiveController;
 use Yii;
+
 /**
- * MenusController implements the CRUD actions for Menus model.
+ * DishesController implements the CRUD actions for Orders model.
  */
-class MenusController extends ActiveController
+class DishesController extends ActiveController
 {
-   public $modelClass = 'common\models\Menus';
+   public $modelClass = 'common\models\Dishes';
 
    //custom action para saber o total de registos.
    public function actionTotal(){
-      $menusModel = new $this->modelClass;
-      $recs = $menusModel::find()->all();
+      $ordersModel = new $this->modelClass;
+      $recs = $ordersModel::find()->all();
       return ['total' => count($recs)];
    }
 
    //custom action que permite receber os pedidos pelo userId
    public function actionRestaurant($id){
-      $menusModel = new $this->modelClass;
+      // $menusModel = new $this->modelClass;
       $connection = Yii::$app->getDb();
       $command = $connection->createCommand("
-            SELECT * 
+         SELECT *
+         FROM dishes
+         WHERE menuId =
+         (
+            SELECT menuId 
             FROM foodly.menus 
             WHERE date = 
             (
@@ -34,7 +40,8 @@ class MenusController extends ActiveController
                   FROM foodly.menus 
                   WHERE restaurantId = $id
                ) t1
-               );
+            )
+         );
       ");
       $recs = $command->queryAll();
       return $recs;

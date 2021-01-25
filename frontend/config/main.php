@@ -59,6 +59,17 @@ return [
                 ], 
                 [
                     'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/users',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'POST login' => 'login',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ], 
+                [
+                    'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/orders',
                     'pluralize' => false,
                     'extraPatterns' => [
@@ -68,12 +79,88 @@ return [
                     'tokens' => [
                         '{id}' => '<id:\\d+>',
                     ],
-                ],[
+                ],
+                [
                     'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/menus',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
                 ],
-                
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/profiles',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET profiles/{id}' => 'image',
+                        'PUT {id}/upload' => 'upload',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/dishes',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ], 
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/restaurant-reviews',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                        'GET user/{id}' => 'user',
+                        'POST delete' => 'apagar',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                        '{profile_id}' => '<profile_id:\\d+>',
+                        '{restaurant_id}' => '<restaurant_id:\\d+>',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/profile-restaurant-favorites',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET user/{id}' => 'user',
+                        'POST delete' => 'apagar',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                        '{profile_id}' => '<profile_id:\\d+>',
+                        '{restaurant_id}' => '<restaurant_id:\\d+>',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/restaurant-reviews',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET total' => 'total',
+                        'GET restaurant/{id}' => 'restaurant',
+                        'GET user/{id}' => 'user',
+                    ],
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
+                ],
             ],
         ],
     ],

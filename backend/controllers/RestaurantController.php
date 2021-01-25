@@ -69,12 +69,11 @@ class RestaurantController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->save();
-            $studentId = $model->restaurantId;
-            $image = UploadedFile::getInstance($model, 'image');
-            $imgName = "restaurant_$studentId".".".$image->getExtension();
-            $image->saveAs(Yii::getAlias('').'/'.$imgName);
-            $model->image = $imgName;
-            $model->save();
+            // $image = UploadedFile::getInstance($model, 'image');
+            // $imgName = "restaurant_$studentId".".".$image->getExtension();
+            // $image->saveAs(Yii::getAlias('').'/'.$imgName);
+            // $model->image = $imgName;
+            // $model->save();
             return $this->redirect(['view', 'id' => $model->restaurantId]);
         }
 
