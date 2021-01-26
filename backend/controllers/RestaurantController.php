@@ -36,8 +36,9 @@ class RestaurantController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Restaurant::find(),
+            'query' => Restaurant::find()->where("restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)"),
         ]);
 
         return $this->render('index', [

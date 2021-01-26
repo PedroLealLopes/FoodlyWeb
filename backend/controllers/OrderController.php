@@ -35,8 +35,9 @@ class OrderController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Orders::find(),
+            'query' => Orders::findBySql("SELECT orders.orderId, orders.date, userId FROM foodly.orders INNER JOIN order_items ON orders.orderId = order_items.orderId WHERE dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)))"),
         ]);
 
         return $this->render('index', [

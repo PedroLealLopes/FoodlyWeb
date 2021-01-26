@@ -35,13 +35,13 @@ class MenusController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Menus::find(),
+            'query' => Menus::find()->where("restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)"),
             'pagination' => [
                 'pageSize' => 100,
             ],
         ]);
-
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
