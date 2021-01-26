@@ -72,7 +72,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                         <a class="collapse-item" href="restaurant">Restaurants</a>
                         <a class="collapse-item" href="menus">Menus</a>
                         <a class="collapse-item" href="dishes">Dishes</a>
-                        <a class="collapse-item" href="ingredients">Ingredients</a>
+                        <!--<a class="collapse-item" href="ingredients">Ingredients</a>-->
                         <a class="collapse-item" href="order">Orders</a>
                     </div>
                 </div>
