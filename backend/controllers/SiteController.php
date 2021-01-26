@@ -82,12 +82,13 @@ class SiteController extends Controller
     }
 
     public static function sql_requests(String $request){
-        $sql_yearly_earnings = "select sum(d.price) as `Yearly Earnings` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where year(o.date) = year(NOW());
-        ";
+        $userId = Yii::$app->user->identity->id;
 
-        $sql_montlhy_earnings = "select sum(d.price) as `Monthly Earnings` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where month(o.date) = month(NOW());";
+        $sql_yearly_earnings = "select sum(d.price) as `Yearly Earnings` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where oi.dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))) AND year(o.date) = year(NOW());";
 
-        $sql_today_earnings = "select sum(d.price) as `Earnings Today` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where YEAR(o.date) = YEAR(NOW()) and MONTH(o.date) = MONTH(NOW()) AND DAY(o.date) = DAY(NOW());";
+        $sql_montlhy_earnings = "select sum(d.price) as `Monthly Earnings` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where oi.dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))) AND   month(o.date) = month(NOW());";
+
+        $sql_today_earnings = "select sum(d.price) as `Earnings Today` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where oi.dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))) AND   YEAR(o.date) = YEAR(NOW()) and MONTH(o.date) = MONTH(NOW()) AND DAY(o.date) = DAY(NOW());";
 
         $sql_every_month = "SELECT monthname(m.MONTH) as `Month`, coalesce(p.e, 0) as `Earning`
         FROM (
@@ -116,7 +117,7 @@ class SiteController extends Controller
         UNION SELECT '2020-12-1 10:28:00' AS
         MONTH
         ) AS m 
-            left JOIN (select coalesce(sum(d.price), 0) as e, o.date as m from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where year(o.date) = year(NOW()) group by MONTH(o.date)) p
+            left JOIN (select coalesce(sum(d.price), 0) as e, o.date as m from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where oi.dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))) AND  year(o.date) = year(NOW()) group by MONTH(o.date)) p
                 ON monthname(p.m) = monthname(m.month) ORDER BY Month(m.MONTH);
         ";
 
