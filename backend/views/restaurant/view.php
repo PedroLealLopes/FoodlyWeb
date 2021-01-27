@@ -40,11 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
             'hasVegan',
             'description:ntext',
             'wifiPassword',
-            // [
-            //     'attribute'=>'image',
-            //     'value' => Yii::getAlias('@restaurantUrlPath'.'/'.$model->image),
-            //     'format'=>['image',['width'=>'100', 'height'=>'100']],
-            // ],
+            [
+                'attribute'=>'image',
+                'value' => Yii::getAlias('@restaurantUrlPath'.'/'.$model->image),
+                'format'=>['image',['width'=>'100', 'height'=>'100']],
+            ],
         ],
     ]) ?>
 
