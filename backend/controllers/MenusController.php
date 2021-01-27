@@ -3,11 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Menus;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
+use common\models\Menus;
 use yii\filters\VerbFilter;
+use common\models\Restaurant;
+use DateTime;
+use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
 /**
  * MenusController implements the CRUD actions for Menus model.
@@ -67,15 +69,19 @@ class MenusController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Menus();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menuId]);
+        $userId = Yii::$app->user->identity->id;
+        $restaurant = Restaurant::findBySql("SELECT * FROM restaurant WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)")->all();
+        $restaurant = $restaurant[0];
+        $menu = new Menus();
+        $menu->restaurantId = $restaurant->restaurantId;
+        $menu->date = date("Y-m-d");
+        if($menu->validate()){
+            $menu->save();
+            return $this->redirect(['view', 'id' => $menu->menuId]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        else{
+            return $this->redirect(['index']);
+        }
     }
 
     /**
