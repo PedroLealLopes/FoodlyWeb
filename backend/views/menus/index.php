@@ -25,8 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'menuId',
             'restaurantId',
             'date',
-
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template'=>'{view} {delete}',
+            ],
         ],
     ]); ?>
 
