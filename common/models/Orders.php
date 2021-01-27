@@ -39,7 +39,7 @@ class Orders extends \yii\db\ActiveRecord
             [
                 ['date'],
                 'match',
-                'pattern' => '(^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])\s([0-2][0-3]:[0-5][0-9])$)',
+                'pattern' => '(^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])\s([0-2][0-9]:[0-5][0-9])$)',
                 'message' =>'Invalid date'
             ],
             [['orderId'], 'unique'],
@@ -90,7 +90,7 @@ class Orders extends \yii\db\ActiveRecord
         return $this->hasOne(Profiles::className(), ['userId' => 'userId']);
     }
 
-    public function afterSave($insert, $changedAttributes){
+    /*public function afterSave($insert, $changedAttributes){
         parent::afterSave($insert, $changedAttributes);
 
         $id = $this->orderId;
@@ -130,5 +130,5 @@ class Orders extends \yii\db\ActiveRecord
             $mqtt->publish($canal, $msg, 0);
             $mqtt->close();
         }
-    }
+    }*/
 }
