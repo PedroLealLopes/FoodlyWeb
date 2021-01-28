@@ -6,6 +6,7 @@ use common\models\Profiles;
 use common\models\Restaurant;
 use yii\bootstrap\Html;
 use yii\widgets\DetailView;
+use yii\widgets\LinkPager;
 
 $this->title = 'Foodly | Restaurant';
 ?>
@@ -37,12 +38,15 @@ $this->title = 'Foodly | Restaurant';
 <!-- End Navbar --> 
 
 <section class="container restaurants-container">
-  <form class="restaurants-form">
+
+  <!-- <form class="restaurants-form">
     <div class="field">
       <input autocomplete="off" type="text" name="restaurant-name" id="restaurant-name" placeholder=" ">
       <label for="restaurant-name">Search for Restaurant:</label>
     </div>
-  </form>
+  </form> -->
+  
+  <?php  echo $this->render('_search', ['model' => $searchModel]); ?>
 
 <?php foreach ($restaurants as $restaurant): ?>
   <div class="restaurant-card">
@@ -55,4 +59,11 @@ $this->title = 'Foodly | Restaurant';
       </div>
   </div>
     <?php endforeach; ?>
+
+    
+    <?php 
+        echo LinkPager::widget([
+            'pagination' => $pagination,
+        ])
+    ?>
 </section>

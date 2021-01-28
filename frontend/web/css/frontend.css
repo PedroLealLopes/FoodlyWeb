@@ -591,6 +591,7 @@ strong {
 	background-color: #f5f5f5;
 	padding: 25px;
 }
+
 @media only screen and (max-width: 1200px) {
 	.header-container .btn-header {
 		visibility: hidden;
@@ -607,3 +608,4 @@ strong {
 		padding: 0px 50px 0px 50px;
 }
 }
+

@@ -12,12 +12,15 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
 use common\models\Profiles;
+use common\models\ProfilesSearch;
 use common\models\Restaurant;
+use common\models\RestaurantSearch;
 use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\data\Pagination;
 
 /**
  * Site controller
@@ -275,6 +278,7 @@ class SiteController extends Controller
      */
     public function actionRestaurants()
     {   
+        $searchTerm = Yii::$app->request->get('RestaurantSearch')['name'];
         $id = Yii::$app->request->get('id', 0);
         if($id > 0){
             $restaurant = Restaurant::find()->where(['restaurantId' => $id])->one();
@@ -283,8 +287,37 @@ class SiteController extends Controller
             $query_avg_price = Yii::$app->db->createCommand($sql_avg_price)->queryAll();
             return $this->render('restaurant', ['restaurant' => $restaurant, "avg" => $query_avg_price[0]['media'] === null ? '0' : $query_avg_price[0]['media']]);
         }else{
-            $restaurants = Restaurant::find()->limit(10)->orderBy(['restaurantId' => SORT_DESC])->all();
-            return $this->render('restaurants', ['restaurants' => $restaurants]);
+            if($searchTerm != null){
+                $query = Restaurant::find()->where(['like', 'name', $searchTerm]);
+
+                
+                $searchModel = new RestaurantSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
+                $restaurants = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+                return $this->render('restaurants', [
+                    'restaurants' => $restaurants, 
+                    'pagination' => $pagination,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    ]);
+
+            }else{
+                $query = Restaurant::find();
+                
+                $searchModel = new RestaurantSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+                $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
+                $restaurants = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+                return $this->render('restaurants', [
+                    'restaurants' => $restaurants, 
+                    'pagination' => $pagination,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    ]);
+            }
         }
     }
 
