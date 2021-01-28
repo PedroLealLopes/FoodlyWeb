@@ -43,8 +43,8 @@ $this->title = 'Foodly | Restaurant';
     <div class="restaurant-body">
       <div class="restaurant-body__header">
         <span><?= $restaurant->location ?></span>
-        <span>Pizzaria</span>
-        <span>Preço médio: <?= $avg ?>€</span>
+        <span>Pizzeria</span>
+        <span>Average Price : <?= $avg ?>€</span>
         <span><?= $restaurant->currentPeople ?>/<?= $restaurant->maxPeople ?></span>
       </div>
       <div class="restaurant-body__info">

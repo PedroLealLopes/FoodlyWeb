@@ -63,8 +63,8 @@ class SignupForm extends Model
             'fullname' => 'Fullname',
             'image' => 'Image',
             'age' => 'Age',
-            'alergias' => 'Alergias',
-            'genero' => 'Genero',
+            'alergias' => 'Alergies',
+            'genero' => 'Gender',
         ];
     }
 

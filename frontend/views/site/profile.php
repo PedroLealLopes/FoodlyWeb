@@ -46,7 +46,7 @@ $this->title = 'Foodly | Profile';
     <?php endif; ?>
     <div class="profile-header__info">
         <h1><?=$profile->fullname ?></h1>
-        <h4><?=$profile->age ?> anos</h4>
+        <h4><?=$profile->age ?> y/o</h4>
         <h4><?=$profile->morada ?></h4>
     </div>
     <div class="profile-header__editBtn" style="margin: 0 25px 25px 0;">
