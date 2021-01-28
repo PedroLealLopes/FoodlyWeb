@@ -47,8 +47,9 @@ class DishesController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Dishes::find(),
+            'query' => Dishes::find()->where("menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))"),
         ]);
 
         return $this->render('index', [

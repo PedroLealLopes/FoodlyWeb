@@ -34,7 +34,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= Url::toRoute('site/index'); ?>">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= Url::toRoute('/'); ?>">
                 <div class="sidebar-brand-icon">
                     <!-- <i class="fas fa-laugh-wink"></i> -->
                     <?= Html::img(yii\helpers\Url::base().'/img/LogoTransparente.png', ['style'=>['height' => '39px', 'width' => '39px']]);?>
@@ -47,7 +47,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="<?= Url::toRoute('site/index'); ?>">
+                <a class="nav-link" href="<?= Url::toRoute('/'); ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -69,7 +69,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Modelos:</h6>
-                        <a class="collapse-item" href="<?= Url::toRoute('profiles/'); ?>">Profiles</a>
+                        <a class="collapse-item" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
                         <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
                         <a class="collapse-item" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
                         <a class="collapse-item" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>

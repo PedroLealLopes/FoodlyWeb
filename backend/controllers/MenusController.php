@@ -3,12 +3,14 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Menus;
-use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use common\models\Menus;
+use yii\filters\VerbFilter;
+use common\models\Restaurant;
+use DateTime;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MenusController implements the CRUD actions for Menus model.
@@ -46,13 +48,13 @@ class MenusController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Menus::find(),
+            'query' => Menus::find()->where("restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)"),
             'pagination' => [
                 'pageSize' => 100,
             ],
         ]);
-
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
@@ -78,35 +80,19 @@ class MenusController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Menus();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menuId]);
+        $userId = Yii::$app->user->identity->id;
+        $restaurant = Restaurant::findBySql("SELECT * FROM restaurant WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)")->all();
+        $restaurant = $restaurant[0];
+        $menu = new Menus();
+        $menu->restaurantId = $restaurant->restaurantId;
+        $menu->date = date("Y-m-d");
+        if($menu->validate()){
+            $menu->save();
+            return $this->redirect(['view', 'id' => $menu->menuId]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Menus model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->menuId]);
+        else{
+            return $this->redirect(['index']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**

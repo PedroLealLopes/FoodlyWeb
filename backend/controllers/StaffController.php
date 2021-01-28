@@ -3,18 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Restaurant;
-use yii\data\ActiveDataProvider;
+use common\models\Staff;
+use common\models\StaffSearch;
 use yii\web\Controller;
-use yii\filters\AccessControl;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * RestaurantController implements the CRUD actions for Restaurant model.
+ * StaffController implements the CRUD actions for Staff model.
  */
-class RestaurantController extends Controller
+class StaffController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -22,16 +20,6 @@ class RestaurantController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'allow' => true,
-                        'roles' => ['admin'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -42,23 +30,22 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Lists all Restaurant models.
+     * Lists all Staff models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $userId = Yii::$app->user->identity->id;
-        $dataProvider = new ActiveDataProvider([
-            'query' => Restaurant::find()->where("restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)"),
-        ]);
+        $searchModel = new StaffSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Restaurant model.
+     * Displays a single Staff model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -71,22 +58,16 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Creates a new Restaurant model.
+     * Creates a new Staff model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Restaurant();
+        $model = new Staff();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->save();
-            // $image = UploadedFile::getInstance($model, 'image');
-            // $imgName = "restaurant_$studentId".".".$image->getExtension();
-            // $image->saveAs(Yii::getAlias('').'/'.$imgName);
-            // $model->image = $imgName;
-            // $model->save();
-            return $this->redirect(['view', 'id' => $model->restaurantId]);
+            return $this->redirect(['view', 'id' => $model->userId]);
         }
 
         return $this->render('create', [
@@ -95,7 +76,7 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Updates an existing Restaurant model.
+     * Updates an existing Staff model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -106,7 +87,7 @@ class RestaurantController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->restaurantId]);
+            return $this->redirect(['view', 'id' => $model->userId]);
         }
 
         return $this->render('update', [
@@ -115,7 +96,7 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Deletes an existing Restaurant model.
+     * Deletes an existing Staff model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -129,15 +110,15 @@ class RestaurantController extends Controller
     }
 
     /**
-     * Finds the Restaurant model based on its primary key value.
+     * Finds the Staff model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Restaurant the loaded model
+     * @return Staff the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Restaurant::findOne($id)) !== null) {
+        if (($model = Staff::findOne($id)) !== null) {
             return $model;
         }
 
