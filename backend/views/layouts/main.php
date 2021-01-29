@@ -73,7 +73,6 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                         <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
                         <a class="collapse-item" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
                         <a class="collapse-item" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('ingredients/'); ?>">Ingredients</a>
                         <a class="collapse-item" href="<?= Url::toRoute('order/'); ?>">Orders</a>
                     </div>
                 </div>
