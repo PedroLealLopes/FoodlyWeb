@@ -278,7 +278,10 @@ class SiteController extends Controller
      */
     public function actionRestaurants()
     {   
-        $searchTerm = Yii::$app->request->get('RestaurantSearch')['name'];
+        $searchTerm = Yii::$app->request->get('RestaurantSearch');
+        if($searchTerm != null){
+            $searchTerm = $searchTerm['name'];
+        }
         $id = Yii::$app->request->get('id', 0);
         if($id > 0){
             $restaurant = Restaurant::find()->where(['restaurantId' => $id])->one();
