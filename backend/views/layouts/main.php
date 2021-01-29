@@ -78,6 +78,13 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                 </div>
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link" href="<?= Url::toRoute('kitchen/'); ?>">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Cozinha</span>
+                </a>
+            </li>
+
         </ul>
         <!-- End of Sidebar -->
 
