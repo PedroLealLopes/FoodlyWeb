@@ -3,65 +3,78 @@
 /* @var $this yii\web\View */
 
 use common\models\Profiles;
+use common\models\Restaurant;
 use yii\bootstrap\Html;
 use yii\widgets\DetailView;
 
-$this->title = 'My Yii Application';
+$this->title = 'Foodly | Homepage';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-        <?php  
-        
-            $profile = new Profiles();
-            if(isset(Yii::$app->user->identity->id)){
-                $profile = $profile->findIdentity(Yii::$app->user->identity->id);
-            echo "<img src=\"data:image/png;base64,". $profile->image ."\" alt=\"profile picture\">";
-
-            }
-            
-        ?>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+<div class="header-container">
+    <svg xmlns="http://www.w3.org/2000/svg" data-name="Layer 1" viewBox="0 0 335.9 65.02" width="150" height="50"><path fill="#7b2cbf" d="M4.24 29a50.62 50.62 0 0036 14.93A50.61 50.61 0 0076.31 29l4.24 4.24a56.58 56.58 0 01-40.27 16.64A56.59 56.59 0 010 33.19z"></path><path fill="#9d4edd" d="M11.35 21.84a40.63 40.63 0 0028.93 12 40.63 40.63 0 0028.92-12l4.24 4.24a46.6 46.6 0 01-33.16 13.74A46.6 46.6 0 017.11 26.08z"></path><path fill="#c77dff" d="M18.46 14.73a30.66 30.66 0 0021.82 9 30.64 30.64 0 0021.81-9L66.33 19a36.6 36.6 0 01-26 10.8A36.61 36.61 0 0114.22 19z"></path><path fill="#0a0a0a" d="M99.65 11.58v12.67h22.2v8.91h-22.2v17.47h-11.1v-48h36.24v8.91zM129.87 32.2c0-11.1 8.57-19 20.28-19s20.21 7.88 20.21 19-8.49 19-20.21 19-20.28-7.9-20.28-19zm29.67 0c0-6.37-4-10.21-9.39-10.21s-9.45 3.84-9.45 10.21 4.11 10.21 9.45 10.21 9.39-3.84 9.39-10.21z"></path><path fill="#0a0a0a" d="M178.36 32.27c0-11.1 8.57-19 20.28-19s20.21 7.88 20.21 19-8.49 19-20.21 19-20.28-7.9-20.28-19zm29.67 0c0-6.37-4-10.21-9.39-10.21s-9.45 3.84-9.45 10.21 4.11 10.21 9.45 10.21S208 38.64 208 32.27zM267-.07v50.84h-10.21v-4.25c-2.67 3.22-6.57 4.8-11.51 4.8-10.41 0-18.43-7.4-18.43-19s8-19 18.43-19c4.53 0 8.36 1.44 11 4.45V-.07zm-10.48 32.41c0-6.37-4.11-10.21-9.39-10.21s-9.45 3.84-9.45 10.21 4.11 10.21 9.45 10.21 9.39-3.84 9.39-10.21zM275 0h10.69v50.84H275zM335.9 14l-16.65 39.1c-3.57 8.9-8.64 11.58-15.25 11.58-3.77 0-7.88-1.24-10.28-3.36l3.91-7.61a9.45 9.45 0 006 2.33c2.94 0 4.59-1.3 6-4.59l.13-.34L293.83 14h11l10.37 25 10.42-25z"></path></svg>
+    <nav class="main-nav">
+        <ul class="main-nav-list">
+            <li>
+                <a aria-current="page" class="active" href="/">Home</a>
+            </li>
+            <li>
+                <a href="/restaurants">Restaurants</a>
+            </li>
+            <li>
+                <a href="/profile">Profile</a>
+            </li>
+        </ul>
+    </nav>
+    <?php if (is_null(Yii::$app->user->identity)): ?>
+        <a style="margin-left: 50px;" href="/login">
+            <button type="text" class="btn-header" style="color: rgb(245, 245, 245);">Login</button>
+        </a>
+    <?php else: ?>
+        <a style="margin-left: 50px;" href="/site/logout">
+            <button type="text" class="btn-header" style="color: rgb(245, 245, 245);">Logout (<?=Yii::$app->user->identity->username ?>)</button>
+        </a>
+    <?php endif; ?>
 </div>
+<!-- End Navbar -->
+
+<!-- Next generation
+restaurant system Section -->
+<div style="margin-top: 81px;">
+<section class="container ">
+<div class="next-gen-container">
+    <h1>Next generation <br> restaurant system</h1><p>All the information of your favorite restaurant at your<br> disposal in your smartphone. Statistics, best dishes, <br> average price per person, and many more.</p>
+    <?php if (is_null(Yii::$app->user->identity)): ?>
+        <a style="margin-left: 50px;" href="/signup">
+            <button type="text" class="btn-header" style="color: rgb(245, 245, 245); width: 40%">Create an Account</button>
+        </a>
+    <?php endif; ?>
+</div>
+<div style="position: absolute; left: 50%;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1271" height="1034" style="position: absolute; top: -100px;"><defs><linearGradient id="c" x1="0%" x2="99.58%" y1="36.147%" y2="63.736%"><stop offset="0%" stop-color="#9D4EDD"></stop></linearGradient><filter id="a" width="104.9%" height="135.9%" x="-4.8%" y="-17.6%" filterUnits="objectBoundingBox"><feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="38.5"></feGaussianBlur><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0240111451 0"></feColorMatrix></filter><path id="b" d="M69.445 572.84L203.73 707.112a100 100 0 0070.708 29.286h70.693a100 100 0 0170.708 29.287l161.04 161.027A100 100 0 00647.584 956h388.853c44.964 0 81.415-36.45 81.415-81.414a81.414 81.414 0 00-23.848-57.57l-86.392-86.386c-12.033-12.032-12.034-31.54-.002-43.574a30.812 30.812 0 0121.788-9.025c17.017 0 30.812-13.795 30.812-30.812a30.81 30.81 0 00-9.025-21.788L855.85 430.11a100 100 0 00-70.708-29.287H550.7a100 100 0 01-70.708-29.287l-35.253-35.25A100 100 0 00374.032 307H138.88c-31.769 0-57.523 25.754-57.523 57.523a57.523 57.523 0 0016.85 40.676l28.761 28.76c15.886 15.884 15.887 41.64.003 57.525a40.676 40.676 0 01-28.764 11.915c-22.465 0-40.677 18.211-40.677 40.676a40.676 40.676 0 0011.915 28.764z"></path></defs><g fill="none" fill-rule="evenodd" transform="translate(15)"><use fill="#000" filter="url(#a)" xlink:href="#b"></use><use fill="#141414" xlink:href="#b"></use><path fill="url(#c)" d="M207.445 265.84L341.73 400.112a100 100 0 0070.708 29.286h70.693a100 100 0 0170.708 29.287l161.04 161.027A100 100 0 00785.584 649h388.853c44.964 0 81.415-36.45 81.415-81.414a81.414 81.414 0 00-23.848-57.57l-86.392-86.386c-12.033-12.032-12.034-31.54-.002-43.574a30.812 30.812 0 0121.788-9.025c17.017 0 30.812-13.795 30.812-30.812a30.81 30.81 0 00-9.025-21.788L993.85 123.11a100 100 0 00-70.708-29.287H688.7a100 100 0 01-70.708-29.287l-35.253-35.25A100 100 0 00512.032 0H276.88c-31.769 0-57.523 25.754-57.523 57.523a57.523 57.523 0 0016.85 40.676l28.761 28.76c15.886 15.884 15.887 41.64.003 57.525a40.676 40.676 0 01-28.764 11.915c-22.465 0-40.677 18.211-40.677 40.676a40.676 40.676 0 0011.915 28.764z"></path></g></svg>
+<?= Html::img("images/app-images.png", ["alt"=>"some", "style" => "z-index: 2; position: relative; right: -10%;"]);?>
+</div>
+</section>
+</div>
+<!-- Next generation
+restaurant system Section -->
+
+<!-- choose-Foodly Section -->
+<section class="container choose-easybank-container"><div class="choose-easybank-header"><h1>Why choose <strong>Foodly</strong></h1><p>We take into account your allergies when you order your food. <br>Control your diet like never before.</p></div><div class="choose-easybank-list"><div class="choose-easybank-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><defs><linearGradient id="gradient" x1="0%" x2="99.58%" y1="0%" y2="99.58%"><stop offset="0%" stop-color="#9D4EDD"></stop><stop offset="100%" stop-color="#81E979"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><circle cx="36" cy="36" r="36" fill="url(#gradient)"></circle><path transform="translate(13, 15)" fill="#fff" fill-rule="nonzero" d="M42.558 23.378l2.406-10.92a1.512 1.512 0 00-2.954-.652l-2.145 9.733h-9.647a1.512 1.512 0 000 3.026h.573l-3.258 7.713a1.511 1.511 0 001.393 2.102c.59 0 1.15-.348 1.394-.925l2.974-7.038 4.717.001 2.971 7.037a1.512 1.512 0 102.787-1.177l-3.257-7.713h.573a1.513 1.513 0 001.473-1.187zM14.208 24.564h.573a1.512 1.512 0 000-3.026H5.134L2.99 11.806a1.511 1.511 0 10-2.954.652l2.406 10.92a1.513 1.513 0 001.477 1.187h.573L1.234 32.28a1.51 1.51 0 00.805 1.98 1.515 1.515 0 001.982-.805l2.971-7.037 4.717-.001 2.972 7.038a1.514 1.514 0 001.982.805 1.51 1.51 0 00.805-1.98l-3.26-7.716z"></path><path d="M24.862 31.353h-.852V18.308h8.13a1.513 1.513 0 100-3.025H12.856a1.514 1.514 0 000 3.025h8.13v13.045h-.852a1.514 1.514 0 000 3.027h4.728a1.513 1.513 0 100-3.027z"></path></g></svg><h3>Online Restaurant</h3><p>Our modern web and mobile applications allow you to keep track of your favorite restaurants wherever you are in the world. Receive notifications about restaurant occupancy</p></div><div class="choose-easybank-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><defs><linearGradient id="gradient" x1="0%" x2="99.58%" y1="0%" y2="99.58%"><stop offset="0%" stop-color="#9D4EDD"></stop><stop offset="100%" stop-color="#81E979"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><circle cx="36" cy="36" r="36" fill="url(#gradient)"></circle><path fill="#FFF" fill-rule="nonzero" d="M44.633 16a3.096 3.096 0 013.092 3.092v7.57c5.23.286 9.393 4.365 9.393 9.338 0 4.973-4.162 9.052-9.393 9.338v7.57A3.095 3.095 0 0144.633 56H27.099a3.095 3.095 0 01-3.092-3.092v-7.24a.587.587 0 111.174 0v3.522h21.37v-3.852a10.479 10.479 0 01-2.89-.568l-4.383 2.391c-.466.254-1.013-.22-.833-.716l1.308-3.596h-6.705a.592.592 0 01-.415-.172l-4.697-4.696a.593.593 0 01-.172-.415V24.728c0-.324.263-.587.587-.587h15.03c.324 0 .587.263.587.587v2.402a10.493 10.493 0 012.583-.468v-4.478H25.18v20.704a.587.587 0 11-1.174 0V19.092A3.096 3.096 0 0127.099 16zm1.918 34.364H25.18v2.544a1.92 1.92 0 001.918 1.918h17.534a1.92 1.92 0 001.918-1.918v-2.544zm-9.433.705c.325 0 .587.262.587.587v1.878a.587.587 0 01-.587.587h-2.505a.587.587 0 01-.587-.587v-1.878c0-.325.263-.587.587-.587zm-.587 1.174h-1.33v.704h1.33v-.704zM47.138 27.82c-4.856 0-8.806 3.67-8.806 8.18 0 2.217.94 4.293 2.647 5.846.177.16.239.41.157.635l-1.056 2.905 3.251-1.773a.587.587 0 01.49-.034 9.343 9.343 0 003.317.601c4.856 0 8.806-3.67 8.806-8.18s-3.95-8.18-8.806-8.18zm0 1.33c.324 0 .587.264.587.588v1.291h.04a2.469 2.469 0 012.465 2.466v.626a.587.587 0 11-1.174 0v-.626c0-.712-.58-1.291-1.292-1.291h-.94c-.884 0-1.604.72-1.604 1.604 0 .885.72 1.605 1.605 1.605h.626a2.782 2.782 0 012.779 2.779c0 1.44-1.1 2.627-2.505 2.765v1.305a.587.587 0 11-1.174 0v-1.291h-.04a2.469 2.469 0 01-2.465-2.466.587.587 0 111.174 0c0 .712.58 1.291 1.292 1.291h.939c.885 0 1.605-.72 1.605-1.604 0-.885-.72-1.605-1.605-1.605h-.626a2.782 2.782 0 01-2.78-2.779 2.783 2.783 0 012.506-2.765v-1.305c0-.324.263-.587.587-.587zm-4.345-3.835H28.938v11.663h4.11c.324 0 .587.263.587.588v4.11h5.567c-1.327-1.622-2.044-3.593-2.044-5.676 0-1.112.208-2.18.59-3.17h-6.266a.587.587 0 110-1.174h6.82a9.397 9.397 0 011.466-1.957h-2.023a.587.587 0 110-1.174h3.13c.076 0 .148.014.214.04.53-.38 1.1-.71 1.704-.985v-2.265zM32.461 38.153h-2.692l2.692 2.692v-2.692zm3.405-3.366a.587.587 0 110 1.174h-4.384a.587.587 0 110-1.174zm-.626-6.263a.587.587 0 110 1.175h-3.758a.587.587 0 110-1.175zm9.393-11.35H27.099a1.92 1.92 0 00-1.918 1.918v1.918h21.37v-1.918a1.92 1.92 0 00-1.918-1.918zm-7.515 1.33a.587.587 0 110 1.175h-2.505a.587.587 0 110-1.174z"></path></g></svg><h3>Simple User Experience</h3><p>Simple design to push the user experience far beyond expectations.</p></div><div class="choose-easybank-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><defs><linearGradient id="gradient" x1="0%" x2="99.58%" y1="0%" y2="99.58%"><stop offset="0%" stop-color="#9D4EDD"></stop><stop offset="100%" stop-color="#81E979"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><circle cx="36" cy="36" r="36" fill="url(#gradient)"></circle><path fill="#FFF" fill-rule="nonzero" d="M36 16a4.522 4.522 0 014.516 4.516 4.514 4.514 0 01-1.951 3.713c2.647 1.031 4.532 3.601 4.532 6.61v3.226h-6.452v.645c0 .356.29.645.645.645h1.29c1.068 0 1.936.868 1.936 1.935v1.29a1.938 1.938 0 01-1.935 1.936h-1.153l.69.69-.964 1.59c.047.1.081.2.124.3h6.287a5.146 5.146 0 01-1.759-3.87 5.167 5.167 0 015.162-5.161 5.167 5.167 0 015.161 5.16 5.154 5.154 0 01-1.904 4c3.283.621 5.775 3.507 5.775 6.969V56H41.161v-7.42a.969.969 0 00-.967-.967h-.968v1.15l-1.802.443c-.08.215-.17.43-.269.642l.963 1.59-3.453 3.454-1.59-.963c-.214.1-.428.19-.642.268L31.99 56h-4.883l-.442-1.802a8.519 8.519 0 01-.642-.268l-1.59.962-3.454-3.453.963-1.59a8.632 8.632 0 01-.268-.642l-1.803-.443V43.88l1.803-.443c.079-.214.169-.428.268-.642l-.963-1.59.69-.69h-1.153a1.938 1.938 0 01-1.935-1.935v-1.29c0-1.068.868-1.936 1.935-1.936h1.29a.645.645 0 00.646-.645v-.645H16v-3.226c0-3.009 1.885-5.579 4.532-6.61a4.514 4.514 0 01-1.951-3.713A4.522 4.522 0 0123.097 16a4.522 4.522 0 014.516 4.516 4.514 4.514 0 01-1.952 3.713 7.126 7.126 0 013.887 3.67 7.128 7.128 0 013.887-3.67 4.514 4.514 0 01-1.951-3.713A4.522 4.522 0 0136 16zm12.903 28.387H31.806a.969.969 0 000 1.936h8.388a2.26 2.26 0 012.258 2.258v6.129h9.032v-7.097h1.29v7.097h1.936v-4.516a5.813 5.813 0 00-5.807-5.807zm-17.925-6.452h-2.86l-.37 1.514-.347.11a7.029 7.029 0 00-1.113.465l-.32.167-1.339-.81-2.021 2.022.81 1.338-.168.32a7.08 7.08 0 00-.465 1.114l-.11.346-1.514.372v2.86l1.514.37.109.347c.117.368.273.743.466 1.113l.167.32-.81 1.339 2.021 2.021 1.338-.81.322.168c.37.192.744.349 1.114.466l.344.11.373 1.513h2.86l.37-1.514.346-.109a7.029 7.029 0 001.113-.466l.322-.167 1.338.81 2.021-2.021-.81-1.338.167-.322c.193-.37.35-.744.467-1.114l.11-.344 1.512-.373v-.14H35.21a5.813 5.813 0 01-5.662 4.517 5.813 5.813 0 01-5.806-5.806 5.813 5.813 0 015.806-5.807 5.82 5.82 0 014.813 2.581h1.503l-.017-.034-.167-.322.81-1.338-2.022-2.021-1.338.81-.321-.167a7.08 7.08 0 00-1.113-.466l-.346-.11-.372-1.514zm-1.43 3.871a4.522 4.522 0 00-4.516 4.517 4.522 4.522 0 004.516 4.516 4.521 4.521 0 004.327-3.226h-1.371a3.225 3.225 0 11-1.71-4.265 2.234 2.234 0 011.012-.251h.898a4.533 4.533 0 00-3.156-1.29zm0 2.581a1.938 1.938 0 00-1.935 1.936c0 1.067.868 1.935 1.935 1.935.623 0 1.184-.3 1.542-.773a2.253 2.253 0 01-1.542-2.13c0-.337.08-.653.212-.94-.071-.009-.14-.028-.212-.028zm17.42-9.032a3.875 3.875 0 00-3.871 3.87 3.875 3.875 0 003.87 3.872 3.875 3.875 0 003.872-3.871 3.875 3.875 0 00-3.871-3.871zm-11.613-1.29H23.742v.645a1.938 1.938 0 01-1.936 1.935h-1.29a.645.645 0 00-.645.645v1.29c0 .357.289.646.645.646h2.443l1.473-1.472 1.59.962c.213-.1.428-.189.642-.268l.443-1.803h4.883l.443 1.803c.214.08.428.169.642.268l1.59-.962 1.472 1.472h2.444a.645.645 0 00.645-.645v-1.29a.645.645 0 00-.645-.646h-1.29a1.938 1.938 0 01-1.936-1.935v-.645zm-12.258-9.033a5.813 5.813 0 00-5.807 5.807v1.935h1.936v-5.161h1.29v5.161h5.161v-5.161h1.29v5.161h1.936V30.84a5.813 5.813 0 00-5.806-5.807zm12.903 0a5.813 5.813 0 00-5.806 5.807v1.935h1.935v-5.161h1.29v5.161h5.162v-5.161h1.29v5.161h1.935V30.84A5.813 5.813 0 0036 25.032zm15.484-1.29A4.522 4.522 0 0156 28.258a4.522 4.522 0 01-4.516 4.516h-7.097v-4.516a4.522 4.522 0 014.516-4.516zm0 1.29h-2.58a3.23 3.23 0 00-3.227 3.226v3.226h5.807a3.23 3.23 0 003.226-3.226 3.23 3.23 0 00-3.226-3.226zm-3.226 3.871v1.29h-1.29v-1.29h1.29zm2.58 0v1.29h-1.29v-1.29h1.29zm2.581 0v1.29h-1.29v-1.29h1.29zm0-2.58v1.29h-6.451v-1.29h6.451zM23.097 17.29a3.23 3.23 0 00-3.226 3.226 3.23 3.23 0 003.226 3.226 3.23 3.23 0 003.226-3.226 3.23 3.23 0 00-3.226-3.226zm12.903 0a3.23 3.23 0 00-3.226 3.226A3.23 3.23 0 0036 23.742a3.23 3.23 0 003.226-3.226A3.23 3.23 0 0036 17.29z"></path></g></svg><h3>Fast Ordering</h3><p>We don't do physical menus. Open your app and pick your order right away. The kitchen will start preparing your food immediately while taking your allergies into account.</p></div><div class="choose-easybank-list-item"><svg xmlns="http://www.w3.org/2000/svg" width="72" height="72"><defs><linearGradient id="gradient" x1="0%" x2="99.58%" y1="0%" y2="99.58%"><stop offset="0%" stop-color="#9D4EDD"></stop><stop offset="100%" stop-color="#81E979"></stop></linearGradient></defs><g fill="none" fill-rule="evenodd"><circle cx="36" cy="36" r="36" fill="url(#gradient)"></circle><path fill="#FFF" fill-rule="nonzero" d="M26.118 28.339a.586.586 0 111.135.292 1.93 1.93 0 00-.06.48V42.89a1.92 1.92 0 001.918 1.919H42.89c.163 0 .324-.02.48-.06a.586.586 0 11.292 1.134 3.102 3.102 0 01-.772.098h-1.293v1.767c0 .345.134.67.379.914l3.855 3.855a1.84 1.84 0 012.116.346 1.84 1.84 0 010 2.6 1.837 1.837 0 01-2.6-.001 1.84 1.84 0 01-.345-2.116l-3.855-3.855a2.448 2.448 0 01-.722-1.743V45.98h-1.333v2.545a.586.586 0 01-1.172 0V45.98h-1.333v9.434a.586.586 0 01-1.172 0V45.98h-1.333v2.545a.586.586 0 01-1.172 0V45.98h-1.333v5.187a1.841 1.841 0 011.253 1.742 1.84 1.84 0 01-1.839 1.838 1.84 1.84 0 01-1.838-1.838 1.84 1.84 0 011.252-1.742V45.98h-1.293a3.094 3.094 0 01-3.09-3.091v-1.293h-1.768c-.345 0-.67.134-.914.379l-3.854 3.853c.125.251.192.53.192.818 0 .492-.191.953-.538 1.3a1.827 1.827 0 01-1.3.539c-.492 0-.953-.191-1.3-.539a1.827 1.827 0 01-.539-1.3c0-.49.191-.952.538-1.3a1.827 1.827 0 011.3-.538c.29 0 .567.067.819.192l3.853-3.854a2.448 2.448 0 011.743-.722h1.767v-1.333h-2.545a.586.586 0 010-1.172h2.545v-1.333h-9.434a.586.586 0 010-1.172h9.434v-1.333h-2.545a.586.586 0 010-1.172h2.545v-1.333h-5.187a1.841 1.841 0 01-1.742 1.252 1.84 1.84 0 01-1.838-1.838 1.84 1.84 0 011.838-1.839c.809 0 1.497.526 1.742 1.253h5.187v-1.293c0-.261.033-.521.098-.772zm20.528 25.156a.665.665 0 00-.47 1.138.667.667 0 10.47-1.138zM30.99 52.243a.667.667 0 10.002 1.334.667.667 0 00-.002-1.334zM17.838 45.98a.662.662 0 00-.47.195.662.662 0 00-.196.471.662.662 0 00.667.667.662.662 0 00.667-.667.662.662 0 00-.196-.47.662.662 0 00-.472-.196zM36 16c.324 0 .586.262.586.586v9.434h1.333v-2.545a.586.586 0 011.172 0v2.545h1.333v-5.187a1.841 1.841 0 01-1.252-1.742 1.84 1.84 0 011.838-1.838 1.84 1.84 0 011.839 1.838c0 .809-.526 1.497-1.253 1.742v5.187h1.293a3.094 3.094 0 013.09 3.091v1.293h1.768c.345 0 .67-.135.914-.379l3.854-3.853a1.83 1.83 0 01-.192-.818c0-.492.191-.953.539-1.3a1.827 1.827 0 011.3-.539c.49 0 .952.191 1.3.539.347.347.538.809.538 1.3 0 .49-.191.952-.538 1.3a1.827 1.827 0 01-1.3.538 1.83 1.83 0 01-.819-.192l-3.853 3.854a2.448 2.448 0 01-1.743.722H45.98v1.333h2.545a.586.586 0 010 1.172H45.98v1.333h9.434a.586.586 0 110 1.172H45.98v1.333h2.545a.586.586 0 010 1.172H45.98v1.333h5.187a1.841 1.841 0 011.742-1.252 1.84 1.84 0 011.838 1.838 1.84 1.84 0 01-1.838 1.838 1.841 1.841 0 01-1.742-1.252H45.98v1.293a3.1 3.1 0 01-.097.771.586.586 0 11-1.135-.291c.04-.156.06-.317.06-.48V29.11a1.922 1.922 0 00-1.92-1.919H29.112c-.163 0-.324.02-.48.06a.586.586 0 11-.292-1.134c.251-.065.51-.098.772-.098h1.293v-1.767c0-.345-.134-.67-.379-.914l-3.855-3.855a1.841 1.841 0 01-2.116-.345 1.84 1.84 0 010-2.6 1.84 1.84 0 012.6 0A1.84 1.84 0 0127 18.654l3.855 3.855c.466.466.722 1.085.722 1.743v1.767h1.333v-2.545a.586.586 0 011.172 0v2.545h1.333v-9.434c0-.324.262-.586.586-.586zm1.761 13.151c1.295 0 2.348.966 2.348 2.152a2 2 0 01-.058.472c1.255.345 2.171 1.406 2.171 2.66 0 .702-.3 1.372-.815 1.878.516.507.815 1.177.815 1.879 0 .955-.544 1.84-1.414 2.344-.087 1.288-1.262 2.313-2.694 2.313A2.796 2.796 0 0136 41.914a2.796 2.796 0 01-2.114.935c-1.488 0-2.7-1.106-2.7-2.465-.876-.579-1.408-1.509-1.408-2.505a2.9 2.9 0 01.617-1.777 2.573 2.573 0 01-.617-1.668c0-1.253.916-2.314 2.171-2.66a2 2 0 01-.058-.47c0-1.187 1.053-2.153 2.348-2.153.7 0 1.33.284 1.761.732a2.437 2.437 0 011.761-.732zm0 1.172c-.648 0-1.175.44-1.175.98a.586.586 0 01-1.172 0c0-.54-.527-.98-1.175-.98-.649 0-1.176.44-1.176.98a.87.87 0 00.215.562v.001l.029.037.008.01.013.022a.586.586 0 01-.497.895l-.016-.001c-1.03.006-1.865.724-1.866 1.605 0 .319.112.625.32.886a3.57 3.57 0 011.075-.438.586.586 0 01.262 1.142c-.975.224-1.657.987-1.657 1.855 0 .481.216.942.586 1.292.1-.163.222-.315.362-.455a.586.586 0 11.826.831 1.183 1.183 0 00-.365.837c0 .713.686 1.293 1.528 1.293.843 0 1.528-.58 1.528-1.293V39.13c0-.537-.401-1.025-.999-1.212a.586.586 0 01.351-1.118c.234.073.45.175.648.3v-3.254a.586.586 0 011.172 0v.749c.434-.274.96-.434 1.527-.434a.586.586 0 010 1.172c-.842 0-1.527.58-1.527 1.292v3.758c0 .713.685 1.293 1.527 1.293.843 0 1.528-.58 1.528-1.293 0-.538-.401-1.025-.999-1.213a.586.586 0 11.352-1.118 2.63 2.63 0 011.54 1.24c.324-.294.516-.688.516-1.101 0-.554-.337-1.063-.901-1.36a.586.586 0 010-1.037c.564-.298.901-.807.901-1.36 0-.882-.835-1.6-1.865-1.606h-.024a2.118 2.118 0 00-.819.164.586.586 0 11-.455-1.08c.306-.13.628-.21.962-.241a.824.824 0 00.088-.369c0-.54-.528-.98-1.176-.98zm15.148 10.02a.667.667 0 10.001 1.335.667.667 0 000-1.334zm-33.818-10.02a.667.667 0 10.001 1.335.667.667 0 00-.001-1.335zm35.07-5.636a.662.662 0 00-.47.195.662.662 0 00-.196.472.662.662 0 00.667.667c.178 0 .345-.07.47-.196a.662.662 0 00.196-.471.662.662 0 00-.195-.472.662.662 0 00-.471-.195zm-13.15-6.263a.667.667 0 100 1.335.667.667 0 000-1.335zm-15.657-1.252a.667.667 0 10.002 1.333.667.667 0 00-.002-1.333z"></path></g></svg><h3>Open API</h3><p>Manage your favorite restaurants, dishes and much more. Tracking your diet has never been easier.</p></div></div></section>
+<!-- End choose-Foodly Section -->
+
+<section class="container latest-articles-container">
+    <img src="C:/wamp64/www/FoodlyWeb/common/images/restaurants/restaurant_112.png" alt="">
+    <h1>Latest Restaurants</h1>
+    <div class="latest-articles-articles">
+    <?php foreach ($latestRestaurants as $restaurant): ?>
+        <div class="article-container">
+                <img src="<?= Yii::getAlias('@restaurantUrlPath'.'/'.$restaurant->image) ?>" alt="Restaurant Image">
+                <div class="article-body">
+                    <h4>
+                        <a href="/restaurants/<?= $restaurant->restaurantId ?>"><?= $restaurant->name ?></a>
+                    </h4>
+                    <p><?= $restaurant->description ?></p>
+                </div>
+            </div>
+    <?php endforeach; ?>
+    </div>
+</section>

@@ -11,10 +11,16 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Profiles;
+use common\models\ProfilesSearch;
+use common\models\Restaurant;
+use common\models\RestaurantSearch;
+use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use yii\data\Pagination;
 
 /**
  * Site controller
@@ -29,7 +35,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'profile'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -41,12 +47,17 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
+                    [
+                        'actions' => ['profile'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['get'],
                 ],
             ],
         ];
@@ -75,7 +86,9 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $latestRestaurants = Restaurant::find()->limit(4)->orderBy(['restaurantId' => SORT_DESC])->all();
+
+        return $this->render('index', ['latestRestaurants' => $latestRestaurants]);
     }
 
     /**
@@ -256,5 +269,75 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    /**
+     * Restaurants page.
+     *  
+     * @return mixed
+     */
+    public function actionRestaurants()
+    {   
+        $searchTerm = Yii::$app->request->get('RestaurantSearch');
+        if($searchTerm != null){
+            $searchTerm = $searchTerm['name'];
+        }
+        $id = Yii::$app->request->get('id', 0);
+        if($id > 0){
+            $restaurant = Restaurant::find()->where(['restaurantId' => $id])->one();
+
+            $sql_avg_price = "select CAST(avg(price) as decimal(4,2)) as `media` from dishes where menuId in (SELECT menuId FROM menus WHERE restaurantId = $id);";
+            $query_avg_price = Yii::$app->db->createCommand($sql_avg_price)->queryAll();
+            return $this->render('restaurant', ['restaurant' => $restaurant, "avg" => $query_avg_price[0]['media'] === null ? '0' : $query_avg_price[0]['media']]);
+        }else{
+            if($searchTerm != null){
+                $query = Restaurant::find()->where(['like', 'name', $searchTerm]);
+
+                
+                $searchModel = new RestaurantSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
+                $restaurants = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+                return $this->render('restaurants', [
+                    'restaurants' => $restaurants, 
+                    'pagination' => $pagination,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    ]);
+
+            }else{
+                $query = Restaurant::find();
+                
+                $searchModel = new RestaurantSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    
+                $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
+                $restaurants = $query->offset($pagination->offset)->limit($pagination->limit)->all();
+                return $this->render('restaurants', [
+                    'restaurants' => $restaurants, 
+                    'pagination' => $pagination,
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                    ]);
+            }
+        }
+    }
+
+    /**
+     * Profile page.
+     *  
+     * @return mixed
+     */
+    public function actionProfile()
+    {   
+        $user = User::findIdentity(Yii::$app->user->identity->id);
+        $profile = Profiles::findIdentity(Yii::$app->user->identity->id);
+
+        
+        if ($profile->load(Yii::$app->request->post()) && $profile->save())
+            return $this->render('profile', ['user' => $user, "profile" => $profile]);
+        
+        return $this->render('profile', ['user' => $user, "profile" => $profile]);
     }
 }

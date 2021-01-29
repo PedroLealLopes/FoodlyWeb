@@ -69,12 +69,11 @@ class SiteController extends Controller
      * @return string
      */
     public function actionIndex()
-    {   
+    {
         $today = $this->sql_requests('today');
         $month = $this->sql_requests('month');
         $year = $this->sql_requests('year');
         $every_month = $this->sql_requests('every_month');
-        
 
         return $this->render('index', 
         [

@@ -45,6 +45,9 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/restaurants' => '/site/restaurants',
+                '/restaurants/{id}' => '/site/restaurant',
+                '/<action>' => '/site/<action>',
                 [
                     'class' => 'yii\rest\UrlRule', 
                     'controller' => 'api/restaurants',
