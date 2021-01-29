@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\Dishes;
+use common\models\OrderItems;
 use Yii;
 use common\models\Orders;
 use yii\data\ActiveDataProvider;
@@ -63,9 +65,12 @@ class OrderController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
-    {
+    {   
+        $orderItems = OrderItems::find()->where(['orderId' => $id])->all();
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'orderItems' => $orderItems,
         ]);
     }
 

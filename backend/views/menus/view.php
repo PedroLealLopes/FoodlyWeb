@@ -35,4 +35,30 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
+    <h1 style='margin-top: 5rem;'>Dishes</h1>
+    <?php
+        echo "<table class='table table-striped table-bordered detail-view dataTable'>";
+        echo '<thead>';
+        echo '<tr>';
+        echo "<th>";
+        echo "Dish Name";
+        echo "</th>";
+        echo "<th>";
+        echo "Dish Price";
+        echo "</th>";
+        echo "<th>";
+        echo "Dish Type";
+        echo "</th>";
+        echo "<th>";
+        echo "Dish Description";
+        echo "</th>";
+        echo '</tr>';
+        echo "</thead>";
+        echo "<tbody>";
+        foreach($dishes as $dish)
+            echo "<tr><td>". $dish->name . "</td><td>". $dish->price . "</td><td>". $dish->type . "</td><td>". $dish->description . "</td></tr>";
+        echo "</tbody>";
+        echo "</table>";
+    ?>
+
 </div>
