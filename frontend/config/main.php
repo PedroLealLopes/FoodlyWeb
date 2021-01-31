@@ -75,6 +75,7 @@ return [
                     'extraPatterns' => [
                         'GET total' => 'total',
                         'GET client/{id}' => 'client',
+                        'GET {id}' => 'showorder',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\d+>',

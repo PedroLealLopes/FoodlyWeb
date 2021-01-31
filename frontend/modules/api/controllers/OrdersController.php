@@ -57,6 +57,20 @@ class OrdersController extends ActiveController
       }
    }
 
+   public function actionShoworder($id){
+
+      $sql = "SELECT orders.orderId, orders.date, orders.userId, dishes.dishId, dishes.type, dishes.price, dishes.menuId, dishes.name, quantity 
+      FROM order_items 
+      INNER JOIN orders ON order_items.orderId = orders.orderId 
+      INNER JOIN dishes ON order_items.dishId = dishes.dishId
+      WHERE orders.orderId = $id;";
+
+      $connection = Yii::$app->getDb();
+      $command = $connection->createCommand($sql);
+      $recs = $command->queryAll();
+      return $recs;
+   }
+
    //custom action para saber o total de registos.
    public function actionTotal(){
       $ordersModel = new $this->modelClass;
