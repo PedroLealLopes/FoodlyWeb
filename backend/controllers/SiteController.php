@@ -6,7 +6,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use frontend\models\SignupForm;
+use common\models\Restaurant;
+use common\models\RestaurantSearch;
+use backend\models\SignupForm;
 
 /**
  * Site controller
@@ -176,15 +178,40 @@ class SiteController extends Controller
     public function actionSignup()
     {   
         $this->layout = 'blank';
-
         $model = new SignupForm();
+        var_dump(Yii::$app->request->post());
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             return $this->goHome();
         }
+        
+        $searchTerm = Yii::$app->request->get('RestaurantSearch');
+        if($searchTerm != null){
+            $searchTerm = $searchTerm['name'];
+            $query = Restaurant::find()->where(['like', 'name', $searchTerm]);
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+            $searchModel = new RestaurantSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $restaurants = $query->all();
+            return $this->render('signup', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'restaurants' => $restaurants,
+                'dataProvider' => $dataProvider,
+                ]);
+        }else{
+            $query = Restaurant::find();
+            
+            $searchModel = new RestaurantSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            $restaurants = $query->all();
+            return $this->render('signup', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'restaurants' => $restaurants,
+                'dataProvider' => $dataProvider,
+                ]);
+        }
     }
 
     /**
