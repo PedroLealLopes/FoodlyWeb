@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Dishes;
 use Yii;
 use yii\web\Controller;
 use common\models\Menus;
@@ -68,8 +69,10 @@ class MenusController extends Controller
      */
     public function actionView($id)
     {
+        $dishes = Dishes::find()->where(['menuId' => $id])->all();
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'dishes' => $dishes
         ]);
     }
 

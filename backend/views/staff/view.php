@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Staff */
 
-$this->title = $model->userId;
+$this->title = $model->user->username;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -29,8 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'restaurantId',
-            'userId',
+            'user.username',
+            'user.email',
+            [                      
+                'label' => 'User Created At',
+                'value' => date("l jS \of F Y h:i:s A", $model->user->created_at),
+            ],
         ],
     ]) ?>
 
