@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Staff;
 use common\models\StaffSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +21,16 @@ class StaffController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
+                        'allow' => true,
+                        'roles' => ['admin', 'cook'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -123,5 +134,21 @@ class StaffController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAdmin($id)
+    {
+        $manager = Yii::$app->authManager;
+        $item = $manager->getRole('cook');
+        $manager->revoke($item, $id);
+
+        $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole('admin');
+        $auth->assign($authorRole, $id);
+
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 }

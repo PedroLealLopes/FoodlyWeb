@@ -10,6 +10,14 @@ $this->title = $model->user->username;
 $this->params['breadcrumbs'][] = ['label' => 'Staff', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+$role = "";
+if (isset(Yii::$app->authManager->getRolesByUser($model->user->id)['cook'])) {
+    $role = "Cook";
+} else {
+    if (isset(Yii::$app->authManager->getRolesByUser($model->user->id)['admin'])) {
+        $role = "Admin";
+    }
+}
 ?>
 <div class="staff-view">
 
@@ -24,6 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+
+        <?php
+        if ($role == "Cook") {
+            echo  Html::a('Change role to Admin', ['admin', 'id' => $model->userId], ['class' => 'btn btn-info']);
+        }
+        ?>
+
+
     </p>
 
     <?= DetailView::widget([
@@ -31,11 +47,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'user.username',
             'user.email',
-            [                      
+            [
                 'label' => 'User Created At',
                 'value' => date("l jS \of F Y h:i:s A", $model->user->created_at),
             ],
+            [
+                'label' => 'Role',
+                'value' => $role
+            ],
         ],
-    ]) ?>
+    ])
+
+
+    ?>
 
 </div>
