@@ -3,12 +3,13 @@
 namespace backend\controllers;
 
 use Yii;
+use yii\web\Controller;
 use common\models\Staff;
+use yii\filters\VerbFilter;
 use common\models\StaffSearch;
 use yii\filters\AccessControl;
-use yii\web\Controller;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * StaffController implements the CRUD actions for Staff model.
@@ -46,8 +47,13 @@ class StaffController extends Controller
      */
     public function actionIndex()
     {
+        $userId = Yii::$app->user->identity->id;
+        $restaurantId = (Staff::find()->where(['userId' => $userId])->one())->restaurantId;
+
         $searchModel = new StaffSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Staff::find()->where(['restaurantId' => $restaurantId]),
+        ]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
