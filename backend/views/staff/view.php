@@ -34,8 +34,15 @@ if (isset(Yii::$app->authManager->getRolesByUser($model->user->id)['cook'])) {
         ]) ?>
 
         <?php
-        if ($role == "Cook") {
-            echo  Html::a('Change role to Admin', ['admin', 'id' => $model->userId], ['class' => 'btn btn-info']);
+        if (!(Yii::$app->user->identity->id == $model->userId)) {
+            if (isset(Yii::$app->authManager->getRolesByUser(Yii::$app->user->identity->id)['admin'])) {
+                if ($role == "Cook") {
+                    echo  Html::a('Change role to Admin', ['admin', 'id' => $model->userId], ['class' => 'btn btn-info']);
+                }
+                if ($role == "Admin") {
+                    echo  Html::a('Change role to Cook', ['cook', 'id' => $model->userId], ['class' => 'btn btn-info']);
+                }
+            }
         }
         ?>
 

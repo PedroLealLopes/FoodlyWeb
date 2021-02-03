@@ -26,9 +26,14 @@ class StaffController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin', 'cook'],
                         'allow' => true,
                         'roles' => ['admin', 'cook'],
+                    ],
+                    [
+                        'actions' => ['admin', 'cook'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
             ],
@@ -150,6 +155,22 @@ class StaffController extends Controller
 
         $auth = \Yii::$app->authManager;
         $authorRole = $auth->getRole('admin');
+        $auth->assign($authorRole, $id);
+
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionCook($id)
+    {
+        $manager = Yii::$app->authManager;
+        $item = $manager->getRole('admin');
+        $manager->revoke($item, $id);
+
+        $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole('cook');
         $auth->assign($authorRole, $id);
 
 
