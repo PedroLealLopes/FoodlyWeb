@@ -2,6 +2,9 @@
 
 namespace frontend\modules\api\controllers;
 
+use common\models\OrderItems;
+use Yii;
+use common\models\Orders;
 use yii\rest\ActiveController;
 
 /**
@@ -10,6 +13,33 @@ use yii\rest\ActiveController;
 class OrdersController extends ActiveController
 {
    public $modelClass = 'common\models\Orders';
+
+   public function actions()
+   {
+      $actions = parent::actions();
+      unset($actions['create']);
+      return $actions;
+   }
+
+   public function actionCreate(){
+      $request = Yii::$app->request;
+      $post = $request->post();
+      if(isset($post["userId"])){
+         $userId = $post["userId"];
+         $order = new Orders();      
+         $order->date = date('Y-m-d H:m');
+         $order->userId = $userId;
+         if($order->validate()){
+            $order->save();
+            $order->refresh();
+            $orderId = $order->orderId;
+            return $orderId;
+         }
+         else{
+           return -1;
+         }
+      }
+   }
 
    //custom action para saber o total de registos.
    public function actionTotal(){

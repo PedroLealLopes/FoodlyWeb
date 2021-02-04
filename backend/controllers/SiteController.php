@@ -1,4 +1,5 @@
 <?php
+
 namespace backend\controllers;
 
 use Yii;
@@ -6,7 +7,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
-use frontend\models\SignupForm;
+use common\models\Restaurant;
+use common\models\RestaurantSearch;
+use backend\models\SignupForm;
 
 /**
  * Site controller
@@ -75,16 +78,19 @@ class SiteController extends Controller
         $year = $this->sql_requests('year');
         $every_month = $this->sql_requests('every_month');
 
-        return $this->render('index', 
-        [
-        'today_earnings' =>  $today === null ? '0' : $today, 
-        'monthly_earnings' => $month  === null ? '0' : $month, 
-        'yearly_earnings' => $year  === null ? '0' : $year, 
-        'every_month' => $every_month  === null ? '0' : $every_month, 
-        ]);
+        return $this->render(
+            'index',
+            [
+                'today_earnings' =>  $today === null ? '0' : $today,
+                'monthly_earnings' => $month  === null ? '0' : $month,
+                'yearly_earnings' => $year  === null ? '0' : $year,
+                'every_month' => $every_month  === null ? '0' : $every_month,
+            ]
+        );
     }
 
-    public static function sql_requests(String $request){
+    public static function sql_requests(String $request)
+    {
         $userId = Yii::$app->user->identity->id;
 
         $sql_yearly_earnings = "select sum(d.price) as `Yearly Earnings` from orders o inner join order_items oi on o.orderId = oi.orderId inner join dishes d on oi.dishId = d.dishId where oi.dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))) AND year(o.date) = year(NOW());";
@@ -129,7 +135,7 @@ class SiteController extends Controller
         $query_today_earnings = Yii::$app->db->createCommand($sql_today_earnings)->queryAll();
         $query_every_month_earnings = Yii::$app->db->createCommand($sql_every_month)->queryAll();
 
-        switch($request){
+        switch ($request) {
             case "today":
                 return $query_today_earnings[0]['Earnings Today'];
             case "month":
@@ -174,17 +180,41 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionSignup()
-    {   
+    {
         $this->layout = 'blank';
-
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             return $this->goHome();
         }
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        $searchTerm = Yii::$app->request->get('RestaurantSearch');
+        if ($searchTerm != null) {
+            $searchTerm = $searchTerm['name'];
+            $query = Restaurant::find()->where(['like', 'name', $searchTerm]);
+
+            $searchModel = new RestaurantSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $restaurants = $query->all();
+            return $this->render('signup', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'restaurants' => $restaurants,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            $query = Restaurant::find();
+
+            $searchModel = new RestaurantSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            $restaurants = $query->all();
+            return $this->render('signup', [
+                'model' => $model,
+                'searchModel' => $searchModel,
+                'restaurants' => $restaurants,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
     }
 
     /**
