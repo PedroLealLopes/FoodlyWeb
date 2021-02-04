@@ -24,35 +24,19 @@ class OrdersController extends ActiveController
    public function actionCreate(){
       $request = Yii::$app->request;
       $post = $request->post();
-
-      if(isset($post["userId"]) && isset($post["dishId"]) && isset($post["quantity"])){
+      if(isset($post["userId"])){
          $userId = $post["userId"];
-         $dishId = $post["dishId"];
-         $quantity = $post["quantity"];
-
          $order = new Orders();      
          $order->date = date('Y-m-d H:m');
          $order->userId = $userId;
          if(!$order->validate()){
-            return $order->getErrors();
-         }
-         else{
             $order->save();
             $order->refresh();
             $orderId = $order->orderId;
-
-            $orderItems = new OrderItems();
-            $orderItems->orderId = $orderId;
-            $orderItems->dishId = $dishId;
-            $orderItems->quantity = $quantity;
-
-            if(!$orderItems->validate()){               
-               return $orderItems->getErrors();
-            }
-            else{
-               $orderItems->save();
-               return true;
-            }
+            return $orderId;
+         }
+         else{
+           return -1;
          }
       }
    }
