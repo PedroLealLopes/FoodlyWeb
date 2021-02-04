@@ -29,7 +29,7 @@ class OrdersController extends ActiveController
          $order = new Orders();      
          $order->date = date('Y-m-d H:m');
          $order->userId = $userId;
-         if(!$order->validate()){
+         if($order->validate()){
             $order->save();
             $order->refresh();
             $orderId = $order->orderId;
