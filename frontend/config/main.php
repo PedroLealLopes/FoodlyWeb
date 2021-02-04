@@ -83,6 +83,14 @@ return [
                     'tokens' => [
                         '{id}' => '<id:\\d+>',
                     ],
+                ], 
+                [
+                    'class' => 'yii\rest\UrlRule', 
+                    'controller' => 'api/ordersitems',
+                    'pluralize' => false,
+                    'tokens' => [
+                        '{id}' => '<id:\\d+>',
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule', 
