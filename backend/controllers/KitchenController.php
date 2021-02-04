@@ -36,7 +36,7 @@ class KitchenController extends Controller
     }
 
     public function actionIndex(){
-        $sql = "SELECT orders.orderId, orders.date, orders.estado, profiles.fullname, dishes.type, dishes.name, dishes.description, order_items.quantity 
+        $sql = "SELECT orders.orderId, orders.date, orders.estado, profiles.fullname, profiles.alergias, dishes.type, dishes.name, dishes.description, order_items.quantity 
         FROM orders
         INNER JOIN profiles ON orders.userId = profiles.userId
         INNER JOIN order_items ON orders.orderId = order_items.orderId

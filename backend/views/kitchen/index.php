@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <h6 id="dishType"><?= $order["type"]?></h3>
                         <p class="card-text"><?= $order["description"] != "" ? $order["description"] : "sem descrição" ?></p>
                         <p id="dishQuantity"><?= $order["quantity"] ?></p>
+                        <p id="dishQuantity">alergias: <?= $order["alergias"] ?></p>
                         <p id="date"><?= $order["date"] ?></p>
                         
                     </div>
