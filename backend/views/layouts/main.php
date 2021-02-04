@@ -25,7 +25,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-</head> 
+</head>
 
 <body id="page-top">
     <div id="wrapper">
@@ -37,7 +37,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?= Url::toRoute('/'); ?>">
                 <div class="sidebar-brand-icon">
                     <!-- <i class="fas fa-laugh-wink"></i> -->
-                    <?= Html::img(yii\helpers\Url::base().'/img/LogoTransparente.png', ['style'=>['height' => '39px', 'width' => '39px']]);?>
+                    <?= Html::img(yii\helpers\Url::base() . '/img/LogoTransparente.png', ['style' => ['height' => '39px', 'width' => '39px']]); ?>
                 </div>
                 <div class="sidebar-brand-text mx-3">Food<sub>ly</sub></div>
             </a>
@@ -80,7 +80,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
 
             <li class="nav-item">
                 <a class="nav-link" href="<?= Url::toRoute('kitchen/'); ?>">
-                    <i class="fas fa-fw fa-cog"></i>
+                    <i class="fas fa-fw fa-utensils"></i>
                     <span>Cozinha</span>
                 </a>
             </li>
@@ -200,7 +200,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base().'img/undraw_profile_1.svg', ['class'=>'rounded-circle']);?>
+                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_1.svg', ['class' => 'rounded-circle']); ?>
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -211,7 +211,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base().'img/undraw_profile_2.svg', ['class'=>'rounded-circle']);?>
+                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_2.svg', ['class' => 'rounded-circle']); ?>
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -222,7 +222,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base().'img/undraw_profile_3.svg', ['class'=>'rounded-circle']);?>
+                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_3.svg', ['class' => 'rounded-circle']); ?>
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -233,7 +233,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <?= Html::img('https://source.unsplash.com/Mv9hjnEUHR4/60x60', ['class'=>'rounded-circle']);?>
+                                        <?= Html::img('https://source.unsplash.com/Mv9hjnEUHR4/60x60', ['class' => 'rounded-circle']); ?>
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -252,9 +252,9 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span name="Span[username]" class="mr-2 d-none d-lg-inline text-gray-600 small"><?= is_null(Yii::$app->user->identity) ? 'Guest' : Yii::$app->user->identity->username
-                                
-                                ?></span>
-                                <?= Html::img(yii\helpers\Url::base().'img/undraw_profile.svg', ['class'=>'img-profile rounded-circle']);?>
+
+                                                                                                                ?></span>
+                                <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile.svg', ['class' => 'img-profile rounded-circle']); ?>
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -271,11 +271,11 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <?php $form = ActiveForm::begin(['id' => 'logout-form', 'class' => 'user', 'action' => '/site/logout']); ?>
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                        <?= Html::submitButton('Logout', ['style' => 'display: inline;background: none;box-shadow: 0px 0px 0px transparent;border:  transparent;text-shadow: 0px 0px 0px transparent;', 'name' => 'logout-button']) ?>
-                                        <?php ActiveForm::end(); ?>
+                                    <?= Html::submitButton('Logout', ['style' => 'display: inline;background: none;box-shadow: 0px 0px 0px transparent;border:  transparent;text-shadow: 0px 0px 0px transparent;', 'name' => 'logout-button']) ?>
+                                    <?php ActiveForm::end(); ?>
                                 </a>
                             </div>
                         </li>
@@ -315,141 +315,139 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
 <?php $this->endPage() ?>
 
 <script>
-$(document).ready( function () {
-    if($('table').length){
-        $('table').attr('id','myTable');
-        $('#myTable').DataTable();
-        $('.pagination').remove();
-    }
-    <?php
-    $every_month = SiteController::sql_requests('every_month');
-
-    $array = [];
-    foreach($every_month as $month){
-    array_push($array, $month['Earning']);
-    }
-    ?>
-
-function number_format(number, decimals, dec_point, thousands_sep) {
-  // *     example: number_format(1234.56, 2, ',', ' ');
-  // *     return: '1 234,56'
-  number = (number + '').replace(',', '').replace(' ', '');
-  var n = !isFinite(+number) ? 0 : +number,
-    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-    sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-    dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-    s = '',
-    toFixedFix = function(n, prec) {
-      var k = Math.pow(10, prec);
-      return '' + Math.round(n * k) / k;
-    };
-  // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-  s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-  if (s[0].length > 3) {
-    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-  }
-  if ((s[1] || '').length < prec) {
-    s[1] = s[1] || '';
-    s[1] += new Array(prec - s[1].length + 1).join('0');
-  }
-  return s.join(dec);
-}
-
-// Area Chart Example
-var ctx = document.getElementById("myAreaChart");
-var myLineChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    datasets: [{
-    label: "Earnings",
-    lineTension: 0.3,
-    backgroundColor: "rgba(78, 115, 223, 0.05)",
-    borderColor: "rgba(78, 115, 223, 1)",
-    pointRadius: 3,
-    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-    pointBorderColor: "rgba(78, 115, 223, 1)",
-    pointHoverRadius: 3,
-    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-    pointHitRadius: 10,
-    pointBorderWidth: 2,
-    data: <?php echo json_encode($array) ?>, 
-    // data: [0, 2, 23, 10, 14, 2, 1, 1, 1, 11, 1, 1], 
-    }],
-  },
-  options: {
-    maintainAspectRatio: false,
-    layout: {
-      padding: {
-        left: 10,
-        right: 25,
-        top: 25,
-        bottom: 0
-      }
-    },
-    scales: {
-      xAxes: [{
-        time: {
-          unit: 'date'
-        },
-        gridLines: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          maxTicksLimit: 7
+    $(document).ready(function() {
+        if ($('table').length) {
+            $('table').attr('id', 'myTable');
+            $('#myTable').DataTable();
+            $('.pagination').remove();
         }
-      }],
-      yAxes: [{
-        ticks: {
-          maxTicksLimit: 5,
-          padding: 10,
-          // Include a dollar sign in the ticks
-          callback: function(value, index, values) {
-            return '$' + number_format(value);
-          }
-        },
-        gridLines: {
-          color: "rgb(234, 236, 244)",
-          zeroLineColor: "rgb(234, 236, 244)",
-          drawBorder: false,
-          borderDash: [2],
-          zeroLineBorderDash: [2]
+        <?php
+        $every_month = SiteController::sql_requests('every_month');
+
+        $array = [];
+        foreach ($every_month as $month) {
+            array_push($array, $month['Earning']);
         }
-      }],
-    },
-    legend: {
-      display: false
-    },
-    tooltips: {
-      backgroundColor: "rgb(255,255,255)",
-      bodyFontColor: "#858796",
-      titleMarginBottom: 10,
-      titleFontColor: '#6e707e',
-      titleFontSize: 14,
-      borderColor: '#dddfeb',
-      borderWidth: 1,
-      xPadding: 15,
-      yPadding: 15,
-      displayColors: false,
-      intersect: false,
-      mode: 'index',
-      caretPadding: 10,
-      callbacks: {
-        label: function(tooltipItem, chart) {
-          var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-          return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+        ?>
+
+        function number_format(number, decimals, dec_point, thousands_sep) {
+            // *     example: number_format(1234.56, 2, ',', ' ');
+            // *     return: '1 234,56'
+            number = (number + '').replace(',', '').replace(' ', '');
+            var n = !isFinite(+number) ? 0 : +number,
+                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+                s = '',
+                toFixedFix = function(n, prec) {
+                    var k = Math.pow(10, prec);
+                    return '' + Math.round(n * k) / k;
+                };
+            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+            if (s[0].length > 3) {
+                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+            }
+            if ((s[1] || '').length < prec) {
+                s[1] = s[1] || '';
+                s[1] += new Array(prec - s[1].length + 1).join('0');
+            }
+            return s.join(dec);
         }
-      }
-    }
-  }
-});
+
+        // Area Chart Example
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+                datasets: [{
+                    label: "Earnings",
+                    lineTension: 0.3,
+                    backgroundColor: "rgba(78, 115, 223, 0.05)",
+                    borderColor: "rgba(78, 115, 223, 1)",
+                    pointRadius: 3,
+                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHoverRadius: 3,
+                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                    pointHitRadius: 10,
+                    pointBorderWidth: 2,
+                    data: <?php echo json_encode($array) ?>,
+                    // data: [0, 2, 23, 10, 14, 2, 1, 1, 1, 11, 1, 1], 
+                }],
+            },
+            options: {
+                maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        left: 10,
+                        right: 25,
+                        top: 25,
+                        bottom: 0
+                    }
+                },
+                scales: {
+                    xAxes: [{
+                        time: {
+                            unit: 'date'
+                        },
+                        gridLines: {
+                            display: false,
+                            drawBorder: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 7
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            maxTicksLimit: 5,
+                            padding: 10,
+                            // Include a dollar sign in the ticks
+                            callback: function(value, index, values) {
+                                return '$' + number_format(value);
+                            }
+                        },
+                        gridLines: {
+                            color: "rgb(234, 236, 244)",
+                            zeroLineColor: "rgb(234, 236, 244)",
+                            drawBorder: false,
+                            borderDash: [2],
+                            zeroLineBorderDash: [2]
+                        }
+                    }],
+                },
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    backgroundColor: "rgb(255,255,255)",
+                    bodyFontColor: "#858796",
+                    titleMarginBottom: 10,
+                    titleFontColor: '#6e707e',
+                    titleFontSize: 14,
+                    borderColor: '#dddfeb',
+                    borderWidth: 1,
+                    xPadding: 15,
+                    yPadding: 15,
+                    displayColors: false,
+                    intersect: false,
+                    mode: 'index',
+                    caretPadding: 10,
+                    callbacks: {
+                        label: function(tooltipItem, chart) {
+                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                        }
+                    }
+                }
+            }
+        });
 
 
 
 
-});
-
-
+    });
 </script>
