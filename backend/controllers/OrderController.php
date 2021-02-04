@@ -50,7 +50,7 @@ class OrderController extends Controller
     {
         $userId = Yii::$app->user->identity->id;
         $dataProvider = new ActiveDataProvider([
-            'query' => Orders::findBySql("SELECT orders.orderId, orders.date, userId FROM foodly.orders INNER JOIN order_items ON orders.orderId = order_items.orderId WHERE dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId)))"),
+            'query' => Orders::findBySql("SELECT orders.orderId, orders.date, userId FROM foodly.orders INNER JOIN order_items ON orders.orderId = order_items.orderId WHERE dishId IN (SELECT dishId FROM dishes WHERE menuId in (SELECT menuId FROM menus WHERE restaurantId = (SELECT restaurantId FROM staff WHERE userId = $userId))) group by orderId"),
         ]);
 
         return $this->render('index', [
@@ -65,9 +65,9 @@ class OrderController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
-    {   
+    {
         $orderItems = OrderItems::find()->where(['orderId' => $id])->all();
-        
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'orderItems' => $orderItems,
