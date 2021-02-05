@@ -10,6 +10,38 @@ use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\ActiveForm;
 use backend\controllers\SiteController;
+use common\models\Contact;
+use SebastianBergmann\RecursionContext\Context;
+
+function time_elapsed_string($datetime, $full = false)
+{
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
 
 AppAsset::register($this);
 rmrevin\yii\fontawesome\AssetBundle::register($this);
@@ -191,58 +223,34 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                <span class="badge badge-danger badge-counter"><?php echo Contact::find()->where(['isRead' => '0'])->count() ?></span>
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_1.svg', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_2.svg', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_3.svg', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img('https://source.unsplash.com/Mv9hjnEUHR4/60x60', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <?php foreach (Contact::find()->where(['isRead' => '0'])->limit(4)->orderBy(['(date)' => SORT_DESC])->all() as $contact) : ?>
+
+
+                                    <?php if (!$contact->isRead) : ?>
+                                        <a class="dropdown-item d-flex align-items-center" href="/contact?id=<?= $contact->contactId ?>">
+                                            <div class="dropdown-list-image mr-3">
+                                                <?= Html::img(yii\helpers\Url::base() . 'https://avatars.dicebear.com/api/human/' . rand(1, 1000) . '.svg', ['class' => 'rounded-circle']); ?>
+                                                <div class="status-indicator bg-success"></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <div class="text-truncate"><?= $contact->body ?></div>
+                                                <div class="small text-gray-500"><?= $contact->email ?> · <?= time_elapsed_string($contact->date . ""); ?></div>
+                                            </div>
+                                        </a>
+                                    <?php else : ?>
+                                    <?php endif; ?>
+
+
+                                <?php endforeach; ?>
+
+                                <a class="dropdown-item text-center small text-gray-500" href="/contact">Read More Messages</a>
                             </div>
                         </li>
 

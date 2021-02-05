@@ -58,7 +58,7 @@ class ContactForm extends Model
         $contact->category = $this->category;
         $contact->email = $this->email;
         $contact->body = $this->body;
-        $contact->date = date('Y-m-d H:m');
+        $contact->date = date('Y-m-d H:i:s');
         $contact->isRead = 0;
         if ($contact->validate()) {
             $contact->save();

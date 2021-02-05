@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "contact".
  *
+ * @property int $contactId
  * @property string $category
  * @property string $email
  * @property string $body
@@ -43,6 +44,7 @@ class Contact extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'contactId' => 'Contact ID',
             'category' => 'Category',
             'email' => 'Email',
             'body' => 'Body',
