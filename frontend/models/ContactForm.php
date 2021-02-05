@@ -10,11 +10,12 @@ use yii\base\Model;
  */
 class ContactForm extends Model
 {
-    public $name;
+    public $category;
     public $email;
-    public $subject;
     public $body;
+    public $date;
     public $verifyCode;
+    public $read;
 
 
     /**
@@ -23,10 +24,12 @@ class ContactForm extends Model
     public function rules()
     {
         return [
-            // name, email, subject and body are required
-            [['name', 'email', 'subject', 'body'], 'required'],
+            // category, email, body are required
+            [['category', 'email', 'body'], 'required'],
             // email has to be a valid email address
             ['email', 'email'],
+            ['date', 'date'],
+            ['read', 'boolean'],
             // verifyCode needs to be entered correctly
             ['verifyCode', 'captcha'],
         ];
@@ -50,12 +53,5 @@ class ContactForm extends Model
      */
     public function sendEmail($email)
     {
-        return Yii::$app->mailer->compose()
-            ->setTo($email)
-            ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
-            ->setReplyTo([$this->email => $this->name])
-            ->setSubject($this->subject)
-            ->setTextBody($this->body)
-            ->send();
     }
 }

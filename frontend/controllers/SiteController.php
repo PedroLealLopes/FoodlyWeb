@@ -35,7 +35,7 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup', 'profile'],
+                'only' => ['logout', 'signup', 'profile', 'contact'],
                 'rules' => [
                     [
                         'actions' => ['signup'],
@@ -44,6 +44,11 @@ class SiteController extends Controller
                     ],
                     [
                         'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -277,49 +282,48 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionRestaurants()
-    {   
+    {
         $searchTerm = Yii::$app->request->get('RestaurantSearch');
-        if($searchTerm != null){
+        if ($searchTerm != null) {
             $searchTerm = $searchTerm['name'];
         }
         $id = Yii::$app->request->get('id', 0);
-        if($id > 0){
+        if ($id > 0) {
             $restaurant = Restaurant::find()->where(['restaurantId' => $id])->one();
 
             $sql_avg_price = "select CAST(avg(price) as decimal(4,2)) as `media` from dishes where menuId in (SELECT menuId FROM menus WHERE restaurantId = $id);";
             $query_avg_price = Yii::$app->db->createCommand($sql_avg_price)->queryAll();
             return $this->render('restaurant', ['restaurant' => $restaurant, "avg" => $query_avg_price[0]['media'] === null ? '0' : $query_avg_price[0]['media']]);
-        }else{
-            if($searchTerm != null){
+        } else {
+            if ($searchTerm != null) {
                 $query = Restaurant::find()->where(['like', 'name', $searchTerm]);
 
-                
+
                 $searchModel = new RestaurantSearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
                 $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
                 $restaurants = $query->offset($pagination->offset)->limit($pagination->limit)->all();
                 return $this->render('restaurants', [
-                    'restaurants' => $restaurants, 
+                    'restaurants' => $restaurants,
                     'pagination' => $pagination,
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    ]);
-
-            }else{
+                ]);
+            } else {
                 $query = Restaurant::find();
-                
+
                 $searchModel = new RestaurantSearch();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-    
+
                 $pagination = new Pagination(['totalCount' => $query->count(), 'pageSize' => 10]);
                 $restaurants = $query->offset($pagination->offset)->limit($pagination->limit)->all();
                 return $this->render('restaurants', [
-                    'restaurants' => $restaurants, 
+                    'restaurants' => $restaurants,
                     'pagination' => $pagination,
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
-                    ]);
+                ]);
             }
         }
     }
@@ -330,14 +334,14 @@ class SiteController extends Controller
      * @return mixed
      */
     public function actionProfile()
-    {   
+    {
         $user = User::findIdentity(Yii::$app->user->identity->id);
         $profile = Profiles::findIdentity(Yii::$app->user->identity->id);
 
-        
+
         if ($profile->load(Yii::$app->request->post()) && $profile->save())
             return $this->render('profile', ['user' => $user, "profile" => $profile]);
-        
+
         return $this->render('profile', ['user' => $user, "profile" => $profile]);
     }
 }
