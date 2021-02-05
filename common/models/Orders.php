@@ -11,6 +11,7 @@ use Bluerhinos\phpMQTT;
  * @property int $orderId
  * @property string $date
  * @property int $userId
+ * @property int $estado
  *
  * @property OrderItems[] $orderItems
  * @property Dishes[] $dishes
@@ -34,8 +35,8 @@ class Orders extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date', 'userId'], 'required'],
-            [['orderId', 'userId'], 'integer'],
+            [['date', 'userId', 'estado'], 'required'],
+            [['orderId', 'userId', 'estado'], 'integer'],
             [
                 ['date'],
                 'match',
@@ -57,6 +58,7 @@ class Orders extends \yii\db\ActiveRecord
             'orderId' => 'Order ID',
             'date' => 'Date',
             'userId' => 'User ID',
+            'estado' => 'Estado',
         ];
     }
 
