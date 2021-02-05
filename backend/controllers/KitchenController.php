@@ -1,8 +1,11 @@
 <?php
 
 namespace backend\controllers;
+
+use common\models\Menus;
 use Yii;
 use yii\web\Controller;
+use common\models\Staff;
 use common\models\Orders;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -35,13 +38,20 @@ class KitchenController extends Controller
         ];
     }
 
-    public function actionIndex(){
+    public function actionIndex(){        
+        $userId = Yii::$app->user->identity->id;
+        $restaurantId = (Staff::find()->where(['userId' => $userId])->one())->restaurantId;
+        $menus = Menus::find()->where(['restaurantId' => $restaurantId])->all();
+        $menuId = -1;
+        foreach($menus as $menu){
+            $menuId = $menu->menuId; 
+        }
         $sql = "SELECT orders.orderId, orders.date, orders.estado, profiles.fullname, profiles.alergias, dishes.type, dishes.name, dishes.description, order_items.quantity 
         FROM orders
         INNER JOIN profiles ON orders.userId = profiles.userId
         INNER JOIN order_items ON orders.orderId = order_items.orderId
         INNER JOIN dishes ON order_items.dishId = dishes.dishId
-        WHERE orders.estado = 0";
+        WHERE orders.estado = 0 AND dishes.menuId = $menuId";
 
         $connection = Yii::$app->getDb();
         $command = $connection->createCommand($sql);

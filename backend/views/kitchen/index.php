@@ -20,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
         <div class="row justify-content-center">
             <?php
+            if($orders != null){
             $lastId = $orders[0]["orderId"];
             for ($i = 0; $i < sizeof($orders); $i++) {
                 $order = $orders[$i];
@@ -47,11 +48,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
                 $lastId = $order["orderId"];
             }
+            ?>
+            <a href="<?= Url::toRoute('kitchen/finish') ?>?id=<?= $lastId ?>" class="btn btn-primary m-2">Terminar Pedido</a>
+                </div>
+            </div>
+            <?php
+        }
     ?>
 
-    <a href="<?= Url::toRoute('kitchen/finish') ?>?id=<?= $lastId ?>" class="btn btn-primary m-2">Terminar Pedido</a>
-        </div>
-    </div>
+    
 
     <script>
         setInterval(function() {
