@@ -2,11 +2,12 @@
 
 namespace frontend\modules\api\controllers;
 
-use common\models\Profiles;
-use common\models\User;
-use yii\rest\ActiveController;
 use Yii;
 use yii\web\Response;
+use common\models\User;
+use common\models\Profiles;
+use yii\rest\ActiveController;
+use frontend\models\SignupForm;
 
 /**
  * MenusController implements the CRUD actions for Menus model.
@@ -45,5 +46,64 @@ class UsersController extends ActiveController
          }
       }
       return ["id"=>-1];
+   }
+
+   public function actionRegister(){
+      $request = Yii::$app->request;
+      $post = $request->post();
+      if(isset($post["username"]) && isset($post["password"]) && isset($post["email"]) && isset($post["fullname"]) && isset($post["age"]))
+      {
+         $username = $post["username"];
+         $password = $post["password"];
+         $email = $post["email"];
+         $fullname = $post["fullname"];
+         $age = $post["age"];
+         $genero = null;
+         $telefone = null;
+         $morada = null;
+         $alergias = null;
+
+         if(isset($post["genero"])){
+            $genero = $post["genero"];
+         }
+         if(isset($post["telefone"])){
+            $telefone = $post["telefone"];
+         }
+         if(isset($post["morada"])){
+            $morada = $post["morada"];
+         }
+         if(isset($post["alergias"])){
+            $alergias = $post["alergias"];
+         }
+
+         $user = new User();
+         $profile = new Profiles();
+         $user->username = $username;
+         $user->email = $email;
+         $user->setPassword($password);
+         $user->generateAuthKey();
+         $user->status = 10;
+         if($user->validate()){  
+            $user->save(false);
+            $user->update();
+            $profile->userId = $user->getId();
+            $profile->alergias = $alergias;
+            $profile->telefone = $telefone;
+            $profile->morada = $morada;
+            $profile->genero = $genero;
+            $profile->fullname = $fullname;
+            $profile->age = $age;
+
+            if($profile->validate()){
+               $profile->save(false);
+               $auth = \Yii::$app->authManager;
+               $authorRole = $auth->getRole('user');
+               $auth->assign($authorRole, $user->getId());
+               
+            }      
+            return $user->getId();
+         }
+      }
+      return -1;
    }
 }

@@ -63,6 +63,7 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'POST login' => 'login',
+                        'POST register' => 'register',
                     ],
                     'tokens' => [
                         '{id}' => '<id:\\d+>',
