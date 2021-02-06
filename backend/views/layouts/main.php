@@ -78,44 +78,79 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <?php if (Yii::$app->request->url == '/') : ?>
+                <li class="nav-item active">
+                <?php else : ?>
+                <li class="nav-item">
+                <?php endif; ?>
                 <a class="nav-link" href="<?= Url::toRoute('/'); ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
+                </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+                <!-- Divider -->
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Gestão
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestão</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Modelos:</h6>
-                        <a class="collapse-item" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('order/'); ?>">Orders</a>
-                    </div>
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Gestão
                 </div>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?= Url::toRoute('kitchen/'); ?>">
-                    <i class="fas fa-fw fa-utensils"></i>
-                    <span>Cozinha</span>
-                </a>
-            </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <?php if (Yii::$app->request->url == '/staff' || Yii::$app->request->url == '/restaurant' || Yii::$app->request->url == '/menus' || Yii::$app->request->url == '/dishes' || Yii::$app->request->url == '/order') : ?>
+                    <li class="nav-item active">
+                    <?php else : ?>
+                    <li class="nav-item">
+                    <?php endif; ?>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Gestão</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Modelos:</h6>
+                            <?php if (Yii::$app->request->url == '/staff') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/restaurant') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/menus') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/dishes') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/order') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('order/'); ?>">Orders</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('order/'); ?>">Orders</a>
+                            <?php endif; ?>
+
+
+
+                        </div>
+                    </div>
+                    </li>
+
+                    <?php if (Yii::$app->request->url == '/kitchen') : ?>
+                        <li class="nav-item active">
+                        <?php else : ?>
+                        <li class="nav-item">
+                        <?php endif; ?>
+                        <a class="nav-link" href="<?= Url::toRoute('kitchen/'); ?>">
+                            <i class="fas fa-fw fa-utensils"></i>
+                            <span>Cozinha</span>
+                        </a>
+                        </li>
 
         </ul>
         <!-- End of Sidebar -->
