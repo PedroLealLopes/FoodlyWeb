@@ -7,6 +7,7 @@ use yii\web\Controller;
 use common\models\Staff;
 use yii\filters\VerbFilter;
 use common\models\StaffSearch;
+use yii\filters\AccessControl;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 
@@ -21,6 +22,21 @@ class StaffController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'admin', 'cook'],
+                        'allow' => true,
+                        'roles' => ['admin', 'cook'],
+                    ],
+                    [
+                        'actions' => ['admin', 'cook'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -38,7 +54,7 @@ class StaffController extends Controller
     {
         $userId = Yii::$app->user->identity->id;
         $restaurantId = (Staff::find()->where(['userId' => $userId])->one())->restaurantId;
-        
+
         $searchModel = new StaffSearch();
         $dataProvider = new ActiveDataProvider([
             'query' => Staff::find()->where(['restaurantId' => $restaurantId]),
@@ -129,5 +145,37 @@ class StaffController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionAdmin($id)
+    {
+        $manager = Yii::$app->authManager;
+        $item = $manager->getRole('cook');
+        $manager->revoke($item, $id);
+
+        $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole('admin');
+        $auth->assign($authorRole, $id);
+
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
+
+    public function actionCook($id)
+    {
+        $manager = Yii::$app->authManager;
+        $item = $manager->getRole('admin');
+        $manager->revoke($item, $id);
+
+        $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole('cook');
+        $auth->assign($authorRole, $id);
+
+
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
     }
 }
