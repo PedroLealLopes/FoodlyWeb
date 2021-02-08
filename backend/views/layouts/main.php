@@ -151,10 +151,24 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                             <span>Cozinha</span>
                         </a>
                         </li>
+
+                    <?php if (Yii::$app->request->url == '/messages') : ?>
+                        <li class="nav-item active">
+                        <?php else : ?>
+                        <li class="nav-item">
+                        <?php endif; ?>
+                        <a class="nav-link" href="<?= Url::toRoute('messages/'); ?>">
+                            <i class="fas fa-fw fa-utensils"></i>
+                            <span>Mensagens</span>
+                        </a>
+                        </li>
+
                         <hr class="sidebar-divider d-none d-md-block">
                         <div class="text-center d-none d-md-inline">
                             <button class="rounded-circle border-0" id="sidebarToggle"></button>
                         </div>
+
+                        
         </ul>
         <!-- End of Sidebar -->
 
