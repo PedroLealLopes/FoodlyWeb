@@ -158,7 +158,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                             <li class="nav-item">
                             <?php endif; ?>
                             <a class="nav-link" href="<?= Url::toRoute('messages/'); ?>">
-                                <i class="fas fa-fw fa-utensils"></i>
+                                <i class="fas fa-envelope fa-fw"></i>
                                 <span>Mensagens</span>
                             </a>
                             </li>
