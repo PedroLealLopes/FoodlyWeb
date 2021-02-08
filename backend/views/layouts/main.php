@@ -152,23 +152,23 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                         </a>
                         </li>
 
-                    <?php if (Yii::$app->request->url == '/messages') : ?>
-                        <li class="nav-item active">
-                        <?php else : ?>
-                        <li class="nav-item">
-                        <?php endif; ?>
-                        <a class="nav-link" href="<?= Url::toRoute('messages/'); ?>">
-                            <i class="fas fa-fw fa-utensils"></i>
-                            <span>Mensagens</span>
-                        </a>
-                        </li>
+                        <?php if (Yii::$app->request->url == '/messages') : ?>
+                            <li class="nav-item active">
+                            <?php else : ?>
+                            <li class="nav-item">
+                            <?php endif; ?>
+                            <a class="nav-link" href="<?= Url::toRoute('messages/'); ?>">
+                                <i class="fas fa-fw fa-utensils"></i>
+                                <span>Mensagens</span>
+                            </a>
+                            </li>
 
-                        <hr class="sidebar-divider d-none d-md-block">
-                        <div class="text-center d-none d-md-inline">
-                            <button class="rounded-circle border-0" id="sidebarToggle"></button>
-                        </div>
+                            <hr class="sidebar-divider d-none d-md-block">
+                            <div class="text-center d-none d-md-inline">
+                                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                            </div>
 
-                        
+
         </ul>
         <!-- End of Sidebar -->
 
@@ -237,7 +237,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
 
 
                                     <?php if (!$contact->isRead) : ?>
-                                        <a class="dropdown-item d-flex align-items-center" href="/contact?id=<?= $contact->contactId ?>">
+                                        <a class="dropdown-item d-flex align-items-center" href="/messages/view?id=<?= $contact->contactId ?>">
                                             <div class="dropdown-list-image mr-3">
                                                 <?= Html::img(yii\helpers\Url::base() . 'https://avatars.dicebear.com/api/human/' . rand(1, 1000) . '.svg', ['class' => 'rounded-circle']); ?>
                                                 <div class="status-indicator bg-success"></div>
@@ -253,7 +253,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
 
                                 <?php endforeach; ?>
 
-                                <a class="dropdown-item text-center small text-gray-500" href="/contact">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="/messages">Read More Messages</a>
                             </div>
                         </li>
 
@@ -309,14 +309,6 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                     <?= $content ?>
                 </div>
             </div>
-
-            <footer class="footer">
-                <div class="container">
-                    <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-                    <p class="pull-right"><?= Yii::powered() ?></p>
-                </div>
-            </footer>
 
             <?php $this->endBody() ?>
         </div>
