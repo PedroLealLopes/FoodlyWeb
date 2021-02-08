@@ -10,6 +10,38 @@ use backend\assets\AppAsset;
 use yii\widgets\Breadcrumbs;
 use yii\bootstrap\ActiveForm;
 use backend\controllers\SiteController;
+use common\models\Contact;
+use SebastianBergmann\RecursionContext\Context;
+
+function time_elapsed_string($datetime, $full = false)
+{
+    $now = new DateTime;
+    $ago = new DateTime($datetime);
+    $diff = $now->diff($ago);
+
+    $diff->w = floor($diff->d / 7);
+    $diff->d -= $diff->w * 7;
+
+    $string = array(
+        'y' => 'year',
+        'm' => 'month',
+        'w' => 'week',
+        'd' => 'day',
+        'h' => 'hour',
+        'i' => 'minute',
+        's' => 'second',
+    );
+    foreach ($string as $k => &$v) {
+        if ($diff->$k) {
+            $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+        } else {
+            unset($string[$k]);
+        }
+    }
+
+    if (!$full) $string = array_slice($string, 0, 1);
+    return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
 
 AppAsset::register($this);
 rmrevin\yii\fontawesome\AssetBundle::register($this);
@@ -23,7 +55,7 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Foodly | <?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 
@@ -46,44 +78,96 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <?php if (Yii::$app->request->url == '/') : ?>
+                <li class="nav-item active">
+                <?php else : ?>
+                <li class="nav-item">
+                <?php endif; ?>
                 <a class="nav-link" href="<?= Url::toRoute('/'); ?>">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
-            </li>
+                </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
+                <!-- Divider -->
+                <hr class="sidebar-divider">
 
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Gestão
-            </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Gestão</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Modelos:</h6>
-                        <a class="collapse-item" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
-                        <a class="collapse-item" href="<?= Url::toRoute('order/'); ?>">Orders</a>
-                    </div>
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    Gestão
                 </div>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link" href="<?= Url::toRoute('kitchen/'); ?>">
-                    <i class="fas fa-fw fa-utensils"></i>
-                    <span>Cozinha</span>
-                </a>
-            </li>
+                <!-- Nav Item - Pages Collapse Menu -->
+                <?php if (Yii::$app->request->url == '/staff' || Yii::$app->request->url == '/restaurant' || Yii::$app->request->url == '/menus' || Yii::$app->request->url == '/dishes' || Yii::$app->request->url == '/order') : ?>
+                    <li class="nav-item active">
+                    <?php else : ?>
+                    <li class="nav-item">
+                    <?php endif; ?>
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-fw fa-cog"></i>
+                        <span>Gestão</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Modelos:</h6>
+                            <?php if (Yii::$app->request->url == '/staff') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/restaurant') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/menus') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/dishes') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('dishes/'); ?>">Dishes</a>
+                            <?php endif; ?>
+                            <?php if (Yii::$app->request->url == '/order') : ?>
+                                <a class="collapse-item active" href="<?= Url::toRoute('order/'); ?>">Orders</a>
+                            <?php else : ?>
+                                <a class="collapse-item" href="<?= Url::toRoute('order/'); ?>">Orders</a>
+                            <?php endif; ?>
+
+
+
+                        </div>
+                    </div>
+                    </li>
+
+                    <?php if (Yii::$app->request->url == '/kitchen') : ?>
+                        <li class="nav-item active">
+                        <?php else : ?>
+                        <li class="nav-item">
+                        <?php endif; ?>
+                        <a class="nav-link" href="<?= Url::toRoute('kitchen/'); ?>">
+                            <i class="fas fa-fw fa-utensils"></i>
+                            <span>Cozinha</span>
+                        </a>
+                        </li>
+
+                        <?php if (Yii::$app->request->url == '/messages') : ?>
+                            <li class="nav-item active">
+                            <?php else : ?>
+                            <li class="nav-item">
+                            <?php endif; ?>
+                            <a class="nav-link" href="<?= Url::toRoute('messages/'); ?>">
+                                <i class="fas fa-envelope fa-fw"></i>
+                                <span>Mensagens</span>
+                            </a>
+                            </li>
+
+                            <hr class="sidebar-divider d-none d-md-block">
+                            <div class="text-center d-none d-md-inline">
+                                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+                            </div>
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -137,112 +221,39 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
-
                         <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                <span class="badge badge-danger badge-counter"><?php echo Contact::find()->where(['isRead' => '0'])->count() ?></span>
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
                                 <h6 class="dropdown-header">
                                     Message Center
                                 </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_1.svg', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div class="font-weight-bold">
-                                        <div class="text-truncate">Hi there! I am wondering if you can help me with a
-                                            problem I've been having.</div>
-                                        <div class="small text-gray-500">Emily Fowler · 58m</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_2.svg', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">I have the photos that you ordered last month, how
-                                            would you like them sent to you?</div>
-                                        <div class="small text-gray-500">Jae Chun · 1d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img(yii\helpers\Url::base() . 'img/undraw_profile_3.svg', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator bg-warning"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
-                                            the progress so far, keep up the good work!</div>
-                                        <div class="small text-gray-500">Morgan Alvarez · 2d</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="dropdown-list-image mr-3">
-                                        <?= Html::img('https://source.unsplash.com/Mv9hjnEUHR4/60x60', ['class' => 'rounded-circle']); ?>
-                                        <div class="status-indicator bg-success"></div>
-                                    </div>
-                                    <div>
-                                        <div class="text-truncate">Am I a good boy? The reason I ask is because someone
-                                            told me that people say this to all dogs, even if they aren't good...</div>
-                                        <div class="small text-gray-500">Chicken the Dog · 2w</div>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <?php foreach (Contact::find()->where(['isRead' => '0'])->limit(4)->orderBy(['(date)' => SORT_DESC])->all() as $contact) : ?>
+
+
+                                    <?php if (!$contact->isRead) : ?>
+                                        <a class="dropdown-item d-flex align-items-center" href="/messages/view?id=<?= $contact->contactId ?>">
+                                            <div class="dropdown-list-image mr-3">
+                                                <?= Html::img(yii\helpers\Url::base() . 'https://avatars.dicebear.com/api/human/' . rand(1, 1000) . '.svg', ['class' => 'rounded-circle']); ?>
+                                                <div class="status-indicator bg-success"></div>
+                                            </div>
+                                            <div class="font-weight-bold">
+                                                <div class="text-truncate"><?= $contact->body ?></div>
+                                                <div class="small text-gray-500"><?= $contact->email ?> · <?= time_elapsed_string($contact->date . ""); ?></div>
+                                            </div>
+                                        </a>
+                                    <?php else : ?>
+                                    <?php endif; ?>
+
+
+                                <?php endforeach; ?>
+
+                                <a class="dropdown-item text-center small text-gray-500" href="/messages">Read More Messages</a>
                             </div>
                         </li>
 
@@ -298,14 +309,6 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                     <?= $content ?>
                 </div>
             </div>
-
-            <footer class="footer">
-                <div class="container">
-                    <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-
-                    <p class="pull-right"><?= Yii::powered() ?></p>
-                </div>
-            </footer>
 
             <?php $this->endBody() ?>
         </div>

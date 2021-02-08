@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use common\models\Contact;
 use Yii;
 use yii\base\Model;
 
@@ -26,6 +27,7 @@ class ContactForm extends Model
         return [
             // category, email, body are required
             [['category', 'email', 'body'], 'required'],
+            ['category', 'in', 'range' => ['Help', 'General', 'Orders', 'Questions', 'Problems']],
             // email has to be a valid email address
             ['email', 'email'],
             ['date', 'date'],
@@ -48,10 +50,22 @@ class ContactForm extends Model
     /**
      * Sends an email to the specified email address using the information collected by this model.
      *
-     * @param string $email the target email address
      * @return bool whether the email was sent
      */
-    public function sendEmail($email)
+    public function sendEmail()
     {
+        $contact = new Contact();
+        $contact->category = $this->category;
+        $contact->email = $this->email;
+        $contact->body = $this->body;
+        $contact->date = date('Y-m-d H:i:s');
+        $contact->isRead = 0;
+        if ($contact->validate()) {
+            $contact->save();
+            $contact->refresh();
+            return true;
+        } else {
+            return false;
+        }
     }
 }
