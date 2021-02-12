@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Contact;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -35,20 +36,28 @@ class MessagesController extends Controller
         ];
     }
 
-    public function actionIndex(){
+    public function actionIndex()
+    {
         $mensagens = new Contact();
-        $mensagens = $mensagens->find()->all();    
-        return $this->render('index', ['mensagens' => $mensagens]);
+        $mensagens = $mensagens->find()->all();
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Contact::find(),
+        ]);
+        return $this->render('index', ['mensagens' => $mensagens, 'dataProvider' => $dataProvider]);
     }
 
 
-    public function actionView($id){
+    public function actionView($id)
+    {
         $mensagem = new Contact();
         $mensagem = $mensagem->find()->where(['contactId' => $id])->one();
         return $this->render('view', ['model' => $mensagem]);
     }
 
-    public function actionUpdate($id){
+    public function actionUpdate($id)
+    {
         $mensagem = new Contact();
         $mensagem = $mensagem->find()->where(['contactId' => $id])->one();
         $mensagem->isRead = 1;

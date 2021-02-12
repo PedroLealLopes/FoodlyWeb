@@ -20,43 +20,49 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="container">
         <div class="row justify-content-center">
             <?php
-            if($orders != null){
-            $lastId = $orders[0]["orderId"];
-            for ($i = 0; $i < sizeof($orders); $i++) {
-                $order = $orders[$i];
-                if ($lastId != $order["orderId"]) {
+            if ($orders != null) {
+                $lastId = $orders[0]["orderId"];
+                for ($i = 0; $i < sizeof($orders); $i++) {
+                    $order = $orders[$i];
+                    if ($lastId != $order["orderId"]) {
             ?>
-                    <a href="<?= Url::toRoute('kitchen/finish') ?>?id=<?= $lastId ?>" class="btn btn-primary m-2">Terminar Pedido</a>
+                        <a href="<?= Url::toRoute('kitchen/finish') ?>?id=<?= $lastId ?>" class="btn btn-primary m-2">Terminar Pedido</a>
         </div>
     </div>
     <div class="container">
         <div class="row justify-content-center">
         <?php
-                }
+                    }
         ?>
-        <div id="order" class="card m-2" style="width: 18rem;">
-            <div class="card-body">
-                <h4 id="dishName" class="card-title"><?= $order["name"] ?></h5>
-                    <h6 id="dishType"><?= $order["type"] ?></h3>
-                        <p class="card-text"><?= $order["description"] != "" ? $order["description"] : "sem descrição" ?></p>
-                        <p id="dishQuantity"><?= $order["quantity"] ?></p>
-                        <p id="dishQuantity">alergias: <?= $order["alergias"] ?></p>
-                        <p id="date"><?= $order["date"] ?></p>
+        <?php if ($order["alergias"] != '') : ?>
+            <div id="order" class="card m-2" style="width: 18rem;border: 3px dashed #f6c23e;">
+            <?php else : ?>
+                <div id="order" class="card m-2" style="width: 18rem;">
+                <?php endif; ?>
+                <div class="card-body">
+                    <h4 id="dishName" class="card-title"><?= $order["name"] ?></h5>
+                        <h6 id="dishType"><?= $order["type"] ?></h3>
+                            <p class="card-text"><?= $order["description"] != "" ? $order["description"] : "sem descrição" ?></p>
+                            <p id="dishQuantity"><?= $order["quantity"] ?></p>
+                            <?php if ($order["alergias"] != '') : ?>
+                                <p id="dishQuantity">alergias: <?= $order["alergias"] ?></p>
+                            <?php endif; ?>
+                            <p id="date"><?= $order["date"] ?></p>
 
+                </div>
+                </div>
+            <?php
+                    $lastId = $order["orderId"];
+                }
+            ?>
+            <a href="<?= Url::toRoute('kitchen/finish') ?>?id=<?= $lastId ?>" class="btn btn-primary m-2">Terminar Pedido</a>
             </div>
         </div>
     <?php
-                $lastId = $order["orderId"];
             }
-            ?>
-            <a href="<?= Url::toRoute('kitchen/finish') ?>?id=<?= $lastId ?>" class="btn btn-primary m-2">Terminar Pedido</a>
-                </div>
-            </div>
-            <?php
-        }
     ?>
 
-    
+
 
     <script>
         setInterval(function() {
