@@ -17,8 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="staff-index">
     <h1><?= Html::encode($this->title) ?></h1>
-
-    <p><?= Html::a('Marcar como lido', ['update', 'id' => $model->contactId], ['class' => 'btn btn-primary']) ?></p>
+    <?php if (!$model->isRead) : ?>
+        <p><?= Html::a('Marcar como lido', ['update', 'id' => $model->contactId], ['class' => 'btn btn-primary']) ?></p>
+    <?php endif; ?>
 
     <?= DetailView::widget([
         'model' => $model,

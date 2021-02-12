@@ -11,7 +11,11 @@ use yii\widgets\Breadcrumbs;
 use yii\bootstrap\ActiveForm;
 use backend\controllers\SiteController;
 use common\models\Contact;
+use common\models\Menus;
+use common\models\Orders;
+use common\models\Staff;
 use SebastianBergmann\RecursionContext\Context;
+
 
 function time_elapsed_string($datetime, $full = false)
 {
@@ -42,6 +46,25 @@ function time_elapsed_string($datetime, $full = false)
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
+
+
+$userId = Yii::$app->user->identity->id;
+$restaurantId = (Staff::find()->where(['userId' => $userId])->one())->restaurantId;
+$menus = Menus::find()->where(['restaurantId' => $restaurantId])->all();
+$menuId = -1;
+foreach ($menus as $menu) {
+    $menuId = $menu->menuId;
+}
+$sql = "SELECT orders.orderId, orders.date, orders.estado, profiles.fullname, profiles.alergias, dishes.type, dishes.name, dishes.description, order_items.quantity 
+FROM orders
+INNER JOIN profiles ON orders.userId = profiles.userId
+INNER JOIN order_items ON orders.orderId = order_items.orderId
+INNER JOIN dishes ON order_items.dishId = dishes.dishId
+WHERE orders.estado = 0 AND dishes.menuId = $menuId";
+
+$connection = Yii::$app->getDb();
+$command = $connection->createCommand($sql);
+$recs = $command->queryAll();
 
 AppAsset::register($this);
 rmrevin\yii\fontawesome\AssetBundle::register($this);
@@ -221,41 +244,77 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                             </div>
                         </li>
 
-                        <!-- Nav Item - Messages -->
                         <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-envelope fa-fw"></i>
-                                <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter"><?php echo Contact::find()->where(['isRead' => '0'])->count() ?></span>
+                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-bell fa-fw"></i>
+                                <!-- Counter - Alerts -->
+                                <span class="badge badge-danger badge-counter"><?= sizeof($recs) ?></span>
                             </a>
-                            <!-- Dropdown - Messages -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
-                                <h6 class="dropdown-header">
-                                    Message Center
-                                </h6>
-                                <?php foreach (Contact::find()->where(['isRead' => '0'])->limit(4)->orderBy(['(date)' => SORT_DESC])->all() as $contact) : ?>
+                            <!-- Dropdown - Alerts -->
+                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                                <h6 class="dropdown-header">Order Alert Center</h6>
+                                <?php foreach ($recs as $order) : ?>
+                                    <a class="dropdown-item d-flex align-items-center" href="/kitchen">
+                                        <div class="mr-3">
 
-
-                                    <?php if (!$contact->isRead) : ?>
-                                        <a class="dropdown-item d-flex align-items-center" href="/messages/view?id=<?= $contact->contactId ?>">
-                                            <div class="dropdown-list-image mr-3">
-                                                <?= Html::img(yii\helpers\Url::base() . 'https://avatars.dicebear.com/api/human/' . rand(1, 1000) . '.svg', ['class' => 'rounded-circle']); ?>
-                                                <div class="status-indicator bg-success"></div>
-                                            </div>
-                                            <div class="font-weight-bold">
-                                                <div class="text-truncate"><?= $contact->body ?></div>
-                                                <div class="small text-gray-500"><?= $contact->email ?> · <?= time_elapsed_string($contact->date . ""); ?></div>
-                                            </div>
-                                        </a>
-                                    <?php else : ?>
-                                    <?php endif; ?>
-
-
+                                            <?php if ($order["alergias"] != '') : ?>
+                                                <div class="icon-circle bg-warning">
+                                                    <i class="fas fa-exclamation-triangle text-white"></i>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="icon-circle bg-success">
+                                                    <i class="fas fas fa-fw fa-utensils text-white"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div>
+                                            <div class="small text-gray-500"><?= $order['type'] ?></div>
+                                            <?= $order['name'] ?>
+                                        </div>
+                                    </a>
                                 <?php endforeach; ?>
-
-                                <a class="dropdown-item text-center small text-gray-500" href="/messages">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="/kitchen">Show All Orders</a>
                             </div>
                         </li>
+
+                        <?php if (isset(Yii::$app->authManager->getRolesByUser(Yii::$app->user->identity->id)['admin'])) : ?>
+                            <!-- Nav Item - Messages -->
+                            <li class="nav-item dropdown no-arrow mx-1">
+                                <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-envelope fa-fw"></i>
+                                    <!-- Counter - Messages -->
+                                    <span class="badge badge-danger badge-counter"><?php echo Contact::find()->where(['isRead' => '0'])->count() ?></span>
+                                </a>
+                                <!-- Dropdown - Messages -->
+                                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="messagesDropdown">
+                                    <h6 class="dropdown-header">
+                                        Message Center
+                                    </h6>
+                                    <?php foreach (Contact::find()->where(['isRead' => '0'])->limit(4)->orderBy(['(date)' => SORT_DESC])->all() as $contact) : ?>
+
+
+                                        <?php if (!$contact->isRead) : ?>
+                                            <a class="dropdown-item d-flex align-items-center" href="/messages/view?id=<?= $contact->contactId ?>">
+                                                <div class="dropdown-list-image mr-3">
+                                                    <?= Html::img(yii\helpers\Url::base() . 'https://avatars.dicebear.com/api/human/' . rand(1, 1000) . '.svg', ['class' => 'rounded-circle']); ?>
+                                                    <div class="status-indicator bg-success"></div>
+                                                </div>
+                                                <div class="font-weight-bold">
+                                                    <div class="text-truncate"><?= $contact->body ?></div>
+                                                    <div class="small text-gray-500"><?= $contact->email ?> · <?= time_elapsed_string($contact->date . ""); ?></div>
+                                                </div>
+                                            </a>
+                                        <?php else : ?>
+                                        <?php endif; ?>
+
+
+                                    <?php endforeach; ?>
+
+                                    <a class="dropdown-item text-center small text-gray-500" href="/messages">Read More Messages</a>
+                                </div>
+                            </li>
+                        <?php else : ?>
+                        <?php endif; ?>
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
