@@ -359,7 +359,8 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                 <i class="fa fa-angle-up"></i>
             </a>
 
-            <div class="wrap" id='wrap'>
+            <div class="wrap" id='wrap' style="padding-left: 1.5rem;
+    padding-right: 1.5rem;">
                 <div>
                     <?= Breadcrumbs::widget([
                         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
