@@ -138,9 +138,9 @@ rmrevin\yii\fontawesome\AssetBundle::register($this);
                                 <a class="collapse-item" href="<?= Url::toRoute('staff/'); ?>">Staff</a>
                             <?php endif; ?>
                             <?php if (Yii::$app->request->url == '/restaurant') : ?>
-                                <a class="collapse-item active" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
+                                <a class="collapse-item active" href="<?= Url::toRoute('restaurant/'); ?>">Restaurant</a>
                             <?php else : ?>
-                                <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurants</a>
+                                <a class="collapse-item" href="<?= Url::toRoute('restaurant/'); ?>">Restaurant</a>
                             <?php endif; ?>
                             <?php if (Yii::$app->request->url == '/menus') : ?>
                                 <a class="collapse-item active" href="<?= Url::toRoute('menus/'); ?>">Menus</a>
