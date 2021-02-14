@@ -81,6 +81,7 @@ $this->title = 'Dashboard';
         </div>
       </div>
     </div>
+
     <!-- Content Row -->
     <div class="row">
       <!-- Area Chart -->
@@ -131,13 +132,13 @@ $this->title = 'Dashboard';
 
       <!-- Pie Chart -->
 
-    </div>
+    <!--</div>-->
     <!-- Content Row -->
-    <div class="row">
+    <!--<div class="row">-->
       <!-- Content Column -->
-      <div class="col-lg-6 mb-4">
+      <!--<div class="col-lg-6 mb-4">-->
         <!-- Project Card Example -->
-        <div class="card shadow mb-4">
+        <!--<div class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
           </div>
@@ -173,9 +174,10 @@ $this->title = 'Dashboard';
               <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Color System -->
+        <!--
         <div class="row">
           <div class="col-lg-6 mb-4">
             <div class="card bg-primary text-white shadow">
@@ -245,7 +247,6 @@ $this->title = 'Dashboard';
       </div>
 
       <div class="col-lg-6 mb-4">
-        <!-- Illustrations -->
         <div class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
@@ -264,10 +265,9 @@ $this->title = 'Dashboard';
             </p>
             <a target="_blank" rel="nofollow" href="https://undraw.co/">Browse Illustrations on unDraw →</a>
           </div>
-        </div>
+        </div> -->
 
-        <!-- Approach -->
-        <div class="card shadow mb-4">
+       <!-- <div class="card shadow mb-4">
           <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
               Development Approach
@@ -286,10 +286,10 @@ $this->title = 'Dashboard';
               classes.
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-  </div>
+  </div> 
 
   <script type="text/javascript">
     document.getElementById('generatePdf').onclick = function() {
