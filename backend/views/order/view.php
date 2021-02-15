@@ -57,8 +57,17 @@ $totalValue = 0;
         echo "</thead>";
         echo "<tbody>";
         foreach($orderItems as $orderItem){
-            $totalValue += $orderItem->dish->price;
-            echo "<tr><td>". $orderItem->dish->name . "</td><td>". $orderItem->dish->price . "</td><td>". $orderItem->dish->type . "</td><td>". $orderItem->dish->description . "</td></tr>";
+            if($orderItem->quantity > 1){
+                $totalValue += $orderItem->dish->price * $orderItem->quantity;
+                
+            for($i = 1; $i <= $orderItem->quantity; $i++){
+                echo "<tr><td>". $orderItem->dish->name . "</td><td>". $orderItem->dish->price . "</td><td>". $orderItem->dish->type . "</td><td>". $orderItem->dish->description . "</td></tr>";
+            };
+            }else{
+                $totalValue += $orderItem->dish->price;
+                
+                echo "<tr><td>". $orderItem->dish->name . "</td><td>". $orderItem->dish->price . "</td><td>". $orderItem->dish->type . "</td><td>". $orderItem->dish->description . "</td></tr>";
+            }
         }
         echo "</tbody>";
         echo "</table>";
